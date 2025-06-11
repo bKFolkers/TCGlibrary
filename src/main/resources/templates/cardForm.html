@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Create a new card</title>
+</head>
+<body>
+<h1>Creat a new card</h1>
+
+<form th:action="@{/card/save}" method="post" th:object="${formCard}">
+
+    <table>
+        <tr>
+            <td>Name</td>
+            <td><input type="text" th:field="*{name}" /></td>
+        </tr>
+        <tr>
+            <td>Expansion</td>
+            <td><input type="text" th:field="*{expansion}" /></td>
+        </tr>
+    </table>
+
+    <input type="submit" value="Save Card" />
+</form>
+</body>
+</html>

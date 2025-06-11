@@ -11,10 +11,12 @@
     <tr>
         <th>Name</th>
         <th>Expansion</th>
+        <th></th>
     </tr>
     <tr th:each="card : ${allCards}">
         <td th:text="${card.name}"></td>
         <td th:text="${card.expansion}"></td>
+        <td><a th:href="@{/card/delete/{cardId}(cardId = ${card.cardId})}">delete</a></td>
     </tr>
 </table>
 

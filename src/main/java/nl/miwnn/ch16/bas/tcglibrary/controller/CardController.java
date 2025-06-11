@@ -7,6 +7,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import java.time.LocalDateTime;
@@ -45,6 +46,12 @@ public class CardController {
             cardRepository.save(cardToBeSaved);
         }
 
+        return "redirect:/card/overview";
+    }
+
+    @GetMapping("/card/delete/{cardId}")
+    private String deleteCard(@PathVariable("cardId") Long cardId) {
+        cardRepository.deleteById(cardId);
         return "redirect:/card/overview";
     }
 }

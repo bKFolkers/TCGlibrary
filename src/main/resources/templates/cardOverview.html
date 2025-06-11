@@ -7,8 +7,15 @@
 <body>
 <h1>Overview of all the cards in the library</h1>
 
-<p>
-  <span th:text="${now}"></span>
-</p>
+<table>
+    <tr>
+        <th>Name</th>
+        <th>Expansion</th>
+    </tr>
+    <tr th:each="card : ${allCards}">
+        <td th:text="${card.name}"></td>
+        <td th:text="${card.expansion}"></td>
+    </tr>
+</table>
 </body>
 </html>

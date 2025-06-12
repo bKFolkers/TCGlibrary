@@ -2,6 +2,7 @@ package nl.miwnn.ch16.bas.tcglibrary.controller;
 
 import nl.miwnn.ch16.bas.tcglibrary.model.Card;
 import nl.miwnn.ch16.bas.tcglibrary.repositories.CardRepository;
+import nl.miwnn.ch16.bas.tcglibrary.repositories.ExpansionRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -20,12 +21,14 @@ import java.time.LocalDateTime;
 @Controller
 public class CardController {
     private final CardRepository cardRepository;
+    private final ExpansionRepository expansionRepository;
 
-    public CardController(CardRepository cardRepository) {
+    public CardController(CardRepository cardRepository, ExpansionRepository expansionRepository) {
         this.cardRepository = cardRepository;
+        this.expansionRepository = expansionRepository;
     }
 
-    @GetMapping({"/", "/card/overview"})
+    @GetMapping({"/card/overview"})
     private String showCardOverview(Model datamodel) {
         datamodel.addAttribute("allCards", cardRepository.findAll());
         return "cardOverview";
@@ -34,7 +37,7 @@ public class CardController {
     @GetMapping("/card/new")
     private String showNewCardForm(Model datamodel) {
         datamodel.addAttribute("formCard", new Card());
-
+        datamodel.addAttribute("allExpansions", expansionRepository.findAll());
         return "cardForm";
     }
 

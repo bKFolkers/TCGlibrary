@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Overview of all the expansions in the library</title>
+</head>
+<body>
+<h1>Overview of all the expansions in the library</h1>
+
+<table>
+    <tr>
+      <th>Name</th>
+      <th>Release Date</th>
+      <th></th>
+    </tr>
+    <tr th:each="expansion : ${allexpansions}">
+      <td th:text="${expansion.name}"></td>
+      <td th:text="${expansion.releaseDate}"></td>
+      <td><a th:href="@{/expansion/delete/{expansionId}(expansionId = ${expansion.expansionId})}">delete</a></td>
+    </tr>
+</table>
+
+<a th:href="@{/expansion/new}">Add new expansion</a>
+</body>
+</html>

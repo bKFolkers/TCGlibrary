@@ -16,7 +16,14 @@
         </tr>
         <tr>
             <td>Expansion</td>
-            <td><input type="text" th:field="*{expansion}" /></td>
+            <td>
+                <select th:field="*{expansion}">
+                    <option th:each="expansion : ${allExpansions}"
+                            th:value="${expansion.expansionId}"
+                            th:text="${expansion.name}">
+                    </option>
+                </select>
+            </td>
         </tr>
     </table>
 

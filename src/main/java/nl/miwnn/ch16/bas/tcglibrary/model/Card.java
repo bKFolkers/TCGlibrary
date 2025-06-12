@@ -3,6 +3,7 @@ package nl.miwnn.ch16.bas.tcglibrary.model;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
 
 /**
  * @author Bas Folkers
@@ -15,11 +16,13 @@ public class Card {
     private Long cardId;
 
     private String name;
-    private String expansion;
+
+    @ManyToOne
+    private Expansion expansion;
 
     @Override
     public String toString() {
-        return String.format("%s - %s", this.name, this.expansion);
+        return String.format("%s ", this.name);
     }
 
     public Long getCardId() {
@@ -38,11 +41,11 @@ public class Card {
         this.name = name;
     }
 
-    public String getExpansion() {
+    public Expansion getExpansion() {
         return expansion;
     }
 
-    public void setExpansion(String expansion) {
+    public void setExpansion(Expansion expansion) {
         this.expansion = expansion;
     }
 }

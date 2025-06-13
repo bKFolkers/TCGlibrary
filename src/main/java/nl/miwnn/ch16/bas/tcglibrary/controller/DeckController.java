@@ -48,11 +48,9 @@ public class DeckController {
             return "addCardForm";
         }
 
-        // Haal het echte deck op uit de database
         Deck existingDeck = deckRepository.findById(deckForm.getDeckId()).orElse(null);
 
         if (existingDeck != null) {
-            // Voeg de geselecteerde kaarten toe aan het deck
             existingDeck.getCards().addAll(deckForm.getCards());
             deckRepository.save(existingDeck);
         }

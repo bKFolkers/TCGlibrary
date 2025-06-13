@@ -18,7 +18,7 @@
     </select>
 
   <label for="cards">Select cards to add:</label>
-    <select th:field="*{cards}" id="cards" multiple size="5">
+    <select th:field="*{cards}" id="cards" multiple size="3">
       <option th:each="card : ${allCards}"
             th:value="${card.cardId}"
             th:text="${card.name}">

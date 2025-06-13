@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Overview of all the decks in the library</title>
+</head>
+<body>
+<h1>Overview of all the decks in the library</h1>
+
+<form th:action="@{/deck/save}" method="post" th:object="${formDeck}">
+    <table>
+        <tr>
+            <th>Deck name</th>
+            <th></th>
+        </tr>
+        <tr th:each="deck : ${allDecks}">
+            <td th:text="${deck.name}"></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td><input type="text" th:field="*{name}" /></td>
+            <td><input type="submit" value="save deck" /></td>
+        </tr>
+    </table>
+</form>
+</body>
+</html>

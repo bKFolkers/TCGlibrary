@@ -14,7 +14,6 @@ import jakarta.persistence.ManyToOne;
 public class Card {
     @Id @GeneratedValue
     private Long cardId;
-
     private String name;
 
     @ManyToOne

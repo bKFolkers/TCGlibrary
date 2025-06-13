@@ -7,12 +7,8 @@ import nl.miwnn.ch16.bas.tcglibrary.repositories.ExpansionRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDateTime;
 import java.util.Optional;
 
 /**
@@ -21,6 +17,7 @@ import java.util.Optional;
  */
 
 @Controller
+@RequestMapping("/card")
 public class CardController {
     private final CardRepository cardRepository;
     private final ExpansionRepository expansionRepository;
@@ -30,7 +27,7 @@ public class CardController {
         this.expansionRepository = expansionRepository;
     }
 
-    @GetMapping("/card/new/{expansionId}")
+    @GetMapping("/new/{expansionId}")
     private String createNewCard(@PathVariable("expansionId") Long expansionId) {
         Optional<Expansion> optionalExpansion = expansionRepository.findById(expansionId);
 
@@ -41,20 +38,20 @@ public class CardController {
         return "redirect:/card/new";
     }
 
-    @GetMapping({"/card/overview"})
+    @GetMapping({"/overview"})
     private String showCardOverview(Model datamodel) {
         datamodel.addAttribute("allCards", cardRepository.findAll());
         return "cardOverview";
     }
 
-    @GetMapping("/card/new")
+    @GetMapping("/new")
     private String showNewCardForm(Model datamodel) {
         datamodel.addAttribute("formCard", new Card());
         datamodel.addAttribute("allExpansions", expansionRepository.findAll());
         return "cardForm";
     }
 
-    @PostMapping("/card/save")
+    @PostMapping("/save")
     private String saveOrUpdateCard(@ModelAttribute("formCard") Card cardToBeSaved, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             System.err.println(bindingResult.getAllErrors());
@@ -65,7 +62,7 @@ public class CardController {
         return "redirect:/";
     }
 
-    @GetMapping("/card/delete/{cardId}")
+    @GetMapping("/delete/{cardId}")
     private String deleteCard(@PathVariable("cardId") Long cardId) {
         cardRepository.deleteById(cardId);
         return "redirect:/card/overview";

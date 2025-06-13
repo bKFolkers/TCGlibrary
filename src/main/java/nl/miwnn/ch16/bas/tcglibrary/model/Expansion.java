@@ -16,11 +16,9 @@ public class Expansion {
 
     @Id @GeneratedValue
     private Long expansionId;
-
     private String name;
     private LocalDate releaseDate;
     private Integer numberOfCards;
-    private Integer numberOfAddedCards;
 
     @OneToMany(mappedBy = "expansion", cascade = CascadeType.ALL)
     private List<Card> cards = new ArrayList<>();
@@ -37,6 +35,10 @@ public class Expansion {
     @Override
     public String toString() {
         return String.format("%s", this.name);
+    }
+
+    public Integer numberOfAddedCards() {
+        return cards.size();
     }
 
     public Long getExpansionId() {
@@ -69,18 +71,6 @@ public class Expansion {
 
     public void setNumberOfCards(Integer numberOfCards) {
         this.numberOfCards = numberOfCards;
-    }
-
-    public Integer getNumberOfAddedCards() {
-        int count = 0;
-        for (Card card : cards) {
-            count++;
-        }
-        return count;
-    }
-
-    public void setNumberOfAddedCards(Integer numberOfAddedCards) {
-        this.numberOfAddedCards = numberOfAddedCards;
     }
 
     public List<Card> getCards() {

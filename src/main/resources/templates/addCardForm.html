@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Add new cards to a deck</title>
+</head>
+<body>
+<h1>Add new cards to a deck</h1>
+
+<form th:action="@{/deck/save}" method="post" th:object="${formDeck}">
+
+  <label for="decks">Select deck:</label>
+    <select th:field="*{deckId}" id="decks">
+      <option th:each="deck : ${allDecks}"
+            th:value="${deck.deckId}"
+            th:text="${deck.name}">
+      </option>
+    </select>
+
+  <label for="cards">Select cards to add:</label>
+    <select th:field="*{cards}" id="cards" multiple size="5">
+      <option th:each="card : ${allCards}"
+            th:value="${card.cardId}"
+            th:text="${card.name}">
+      </option>
+    </select>
+  <input type="submit" value="Save Deck" />
+
+</form>
+
+<a th:href="@{/deck/overview}">Back to deck overview</a>
+</body>
+</html>

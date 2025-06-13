@@ -48,7 +48,7 @@ public class CardController {
     private String showNewCardForm(Model datamodel) {
         datamodel.addAttribute("formCard", new Card());
         datamodel.addAttribute("allExpansions", expansionRepository.findAll());
-        return "cardForm";
+        return "newCardForm";
     }
 
     @PostMapping("/save")
@@ -59,7 +59,7 @@ public class CardController {
             cardRepository.save(cardToBeSaved);
         }
 
-        return "redirect:/";
+        return "redirect:/card/overview";
     }
 
     @GetMapping("/delete/{cardId}")

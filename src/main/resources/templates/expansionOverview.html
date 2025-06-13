@@ -8,12 +8,12 @@
 <h1>Overview of all the Expansions in the library</h1>
 
 <table>
+
     <tr>
       <th>Expansion name</th>
       <th>Release date</th>
       <th>No. of cards <br/> in Expansion</th>
       <th>No. of added cards</th>
-<!--      <th></th>-->
       <th></th>
     </tr>
     <tr th:each="expansion : ${allexpansions}">
@@ -22,14 +22,12 @@
       <td th:text="${expansion.numberOfCards}"></td>
       <td th:text="${expansion.numberOfAddedCards}"></td>
       <td><a th:href="@{/expansion/delete/{expansionId}(expansionId = ${expansion.expansionId})}">Delete Expansion</a></td>
-<!--      <td><a th:href="@{/card/new/{expansionId}(expansionId = ${expansion.expansionId})}">Add Card</a></td>-->
     </tr>
+
 </table>
 
-<a th:href="@{/card/new}">Add a Card</a>
-<br/>
-<a th:href="@{/expansion/new}">Add an Expansion</a>
-<br/>
-<a th:href="@{/card/overview}">Show card overview</a>
+<a th:href="@{/expansion/new}">Add an Expansion</a><br/>
+<a th:href="@{/card/overview}">Show card overview</a><br/>
+<a th:href="@{/deck/overview}">Show deck overview</a>
 </body>
 </html>

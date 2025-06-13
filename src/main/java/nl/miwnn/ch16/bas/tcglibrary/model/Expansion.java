@@ -13,7 +13,6 @@ import java.util.List;
 
 @Entity
 public class Expansion {
-
     @Id @GeneratedValue
     private Long expansionId;
     private String name;

@@ -11,17 +11,23 @@
     <table>
         <tr>
             <th>Deck name</th>
+            <th>Number of cards</th>
             <th></th>
         </tr>
         <tr th:each="deck : ${allDecks}">
             <td th:text="${deck.name}"></td>
+            <td th:text="${deck.numberOfCardsInDeck}"></td>
+            <td><a th:href="@{/deck/delete/{deckId}(deckId = ${deck.deckId})}">Delete deck</a></td>
             <td></td>
         </tr>
         <tr>
             <td><input type="text" th:field="*{name}" /></td>
-            <td><input type="submit" value="save deck" /></td>
+            <td><input type="submit" value="Save empty deck" /></td>
         </tr>
+
     </table>
 </form>
+<a th:href="@{/expansion/overview}">Show expansion overview</a><br/>
+<a th:href="@{/deck/add}">Add cards to a deck</a><br/>
 </body>
 </html>

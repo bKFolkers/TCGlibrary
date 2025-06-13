@@ -1,9 +1,8 @@
 package nl.miwnn.ch16.bas.tcglibrary.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
+
+import java.util.List;
 
 /**
  * @author Bas Folkers
@@ -14,7 +13,9 @@ import jakarta.persistence.ManyToOne;
 public class Card {
     @Id @GeneratedValue
     private Long cardId;
+
     private String name;
+    private Double price;
 
     @ManyToOne
     private Expansion expansion;

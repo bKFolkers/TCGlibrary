@@ -20,6 +20,14 @@ public class Card {
     @ManyToOne
     private Expansion expansion;
 
+    public Card(Expansion expansion) {
+        this.expansion = expansion;
+    }
+
+//    exists for JPA
+    public Card() {
+    }
+
     @Override
     public String toString() {
         return String.format("%s ", this.name);

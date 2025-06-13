@@ -18,11 +18,21 @@ public class Expansion {
     private Long expansionId;
 
     private String name;
-
     private LocalDate releaseDate;
+    private Integer numberOfCards;
+    private Integer numberOfAddedCards;
 
     @OneToMany(mappedBy = "expansion", cascade = CascadeType.ALL)
     private List<Card> cards = new ArrayList<>();
+
+    public Expansion(String name, LocalDate releaseDate, Integer numberOfCards) {
+        this.name = name;
+        this.releaseDate = releaseDate;
+        this.numberOfCards = numberOfCards;
+    }
+
+    public Expansion() {
+    }
 
     @Override
     public String toString() {
@@ -51,6 +61,26 @@ public class Expansion {
 
     public void setReleaseDate(LocalDate releaseDate) {
         this.releaseDate = releaseDate;
+    }
+
+    public Integer getNumberOfCards() {
+        return numberOfCards;
+    }
+
+    public void setNumberOfCards(Integer numberOfCards) {
+        this.numberOfCards = numberOfCards;
+    }
+
+    public Integer getNumberOfAddedCards() {
+        int count = 0;
+        for (Card card : cards) {
+            count++;
+        }
+        return count;
+    }
+
+    public void setNumberOfAddedCards(Integer numberOfAddedCards) {
+        this.numberOfAddedCards = numberOfAddedCards;
     }
 
     public List<Card> getCards() {

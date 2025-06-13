@@ -1,6 +1,7 @@
 package nl.miwnn.ch16.bas.tcglibrary.controller;
 
 import nl.miwnn.ch16.bas.tcglibrary.model.Card;
+import nl.miwnn.ch16.bas.tcglibrary.model.Expansion;
 import nl.miwnn.ch16.bas.tcglibrary.repositories.CardRepository;
 import nl.miwnn.ch16.bas.tcglibrary.repositories.ExpansionRepository;
 import org.springframework.stereotype.Controller;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import java.time.LocalDateTime;
+import java.util.Optional;
 
 /**
  * @author Bas Folkers
@@ -26,6 +28,17 @@ public class CardController {
     public CardController(CardRepository cardRepository, ExpansionRepository expansionRepository) {
         this.cardRepository = cardRepository;
         this.expansionRepository = expansionRepository;
+    }
+
+    @GetMapping("/card/new/{expansionId}")
+    private String createNewCard(@PathVariable("expansionId") Long expansionId) {
+        Optional<Expansion> optionalExpansion = expansionRepository.findById(expansionId);
+
+        if (optionalExpansion.isPresent()) {
+            Card card = new Card(optionalExpansion.get());
+            cardRepository.save(card);
+        }
+        return "redirect:/card/new";
     }
 
     @GetMapping({"/card/overview"})
@@ -49,7 +62,7 @@ public class CardController {
             cardRepository.save(cardToBeSaved);
         }
 
-        return "redirect:/card/overview";
+        return "redirect:/";
     }
 
     @GetMapping("/card/delete/{cardId}")

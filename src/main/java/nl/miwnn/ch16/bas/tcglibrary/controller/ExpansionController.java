@@ -1,7 +1,6 @@
 package nl.miwnn.ch16.bas.tcglibrary.controller;
 
 import nl.miwnn.ch16.bas.tcglibrary.model.Expansion;
-import nl.miwnn.ch16.bas.tcglibrary.repositories.CardRepository;
 import nl.miwnn.ch16.bas.tcglibrary.repositories.ExpansionRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -34,7 +33,8 @@ public class ExpansionController {
     }
 
     @PostMapping("/expansion/save")
-    private String saveOrUpdateExpansion(@ModelAttribute("formExpansion") Expansion expansionToBeSaved, BindingResult bindingResult) {
+    private String saveOrUpdateExpansion(@ModelAttribute("formExpansion") Expansion expansionToBeSaved,
+                                         BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             System.err.println(bindingResult.getAllErrors());
         } else {

@@ -11,16 +11,20 @@
 
     <table>
         <tr>
-            <td>Name</td>
+            <td>Name of Expansion</td>
             <td><input type="text" th:field="*{name}" /></td>
         </tr>
         <tr>
-            <td>Release Date</td>
+            <td>Release date (yyyy-mm-dd)</td>
             <td><input type="text" th:field="*{releaseDate}" /></td>
+        </tr>
+        <tr>
+            <td>Number of cards in Expansion</td>
+            <td><input type="text" th:field="*{numberOfCards}" /></td>
         </tr>
     </table>
 
-    <input type="submit" value="Save Card" />
+    <input type="submit" value="Save Expansion" />
 </form>
 </body>
 </html>

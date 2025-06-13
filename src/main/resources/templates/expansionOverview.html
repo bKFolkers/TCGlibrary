@@ -2,24 +2,34 @@
 <html lang="en" xmlns:th="https://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8">
-  <title>Overview of all the expansions in the library</title>
+  <title>Overview of all the Expansions in the library</title>
 </head>
 <body>
-<h1>Overview of all the expansions in the library</h1>
+<h1>Overview of all the Expansions in the library</h1>
 
 <table>
     <tr>
-      <th>Name</th>
-      <th>Release Date</th>
+      <th>Expansion name</th>
+      <th>Release date</th>
+      <th>No. of cards <br/> in Expansion</th>
+      <th>No. added of cards</th>
+<!--      <th></th>-->
       <th></th>
     </tr>
     <tr th:each="expansion : ${allexpansions}">
       <td th:text="${expansion.name}"></td>
       <td th:text="${expansion.releaseDate}"></td>
-      <td><a th:href="@{/expansion/delete/{expansionId}(expansionId = ${expansion.expansionId})}">delete</a></td>
+      <td th:text="${expansion.numberOfCards}"></td>
+      <td th:text="${expansion.numberOfAddedCards}"></td>
+      <td><a th:href="@{/expansion/delete/{expansionId}(expansionId = ${expansion.expansionId})}">Delete Expansion</a></td>
+<!--      <td><a th:href="@{/card/new/{expansionId}(expansionId = ${expansion.expansionId})}">Add Card</a></td>-->
     </tr>
 </table>
 
-<a th:href="@{/expansion/new}">Add new expansion</a>
+<a th:href="@{/card/new}">Add a Card</a>
+<br/>
+<a th:href="@{/expansion/new}">Add an Expansion</a>
+<br/>
+<a th:href="@{/card/overview}">Show card overview</a>
 </body>
 </html>

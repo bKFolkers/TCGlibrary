@@ -1,7 +1,6 @@
 package nl.miwnn.ch16.bas.tcglibrary.controller;
 
 import nl.miwnn.ch16.bas.tcglibrary.model.Deck;
-import nl.miwnn.ch16.bas.tcglibrary.model.Expansion;
 import nl.miwnn.ch16.bas.tcglibrary.repositories.CardRepository;
 import nl.miwnn.ch16.bas.tcglibrary.repositories.DeckRepository;
 import org.springframework.stereotype.Controller;
@@ -13,7 +12,7 @@ import java.util.Optional;
 
 /**
  * @author Bas Folkers
- * Handles all requests related to decks of cards
+ * Handles all requests related to decks consisting of cards
  */
 
 @Controller
@@ -31,7 +30,6 @@ public class DeckController {
     private String showDeckOverview(Model datamodel) {
         datamodel.addAttribute("allDecks", deckRepository.findAll());
         datamodel.addAttribute("formDeck", new Deck());
-
         return "deckOverview";
     }
 
@@ -58,8 +56,8 @@ public class DeckController {
     }
 
     @PostMapping("/update/save")
-    private String saveUpdatedDeck(@ModelAttribute("formDeck") Deck formDeck, BindingResult result) {
-        if (result.hasErrors()) {
+    private String saveUpdatedDeck(@ModelAttribute("formDeck") Deck formDeck, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
             return "updateDeckForm";
         }
 

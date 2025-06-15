@@ -1,8 +1,7 @@
 package nl.miwnn.ch16.bas.tcglibrary.controller;
 
-import nl.miwnn.ch16.bas.tcglibrary.model.Card;
-import nl.miwnn.ch16.bas.tcglibrary.model.Deck;
 import nl.miwnn.ch16.bas.tcglibrary.model.Expansion;
+import nl.miwnn.ch16.bas.tcglibrary.repositories.CardRepository;
 import nl.miwnn.ch16.bas.tcglibrary.repositories.ExpansionRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,9 +18,11 @@ import java.util.Optional;
 @Controller
 public class ExpansionController {
     private final ExpansionRepository expansionRepository;
+    private final CardRepository cardRepository;
 
-    public ExpansionController(ExpansionRepository expansionRepository) {
+    public ExpansionController(ExpansionRepository expansionRepository, CardRepository cardRepository) {
         this.expansionRepository = expansionRepository;
+        this.cardRepository = cardRepository;
     }
 
     @GetMapping({"/", "/expansion/overview"})
@@ -54,41 +55,26 @@ public class ExpansionController {
         return "redirect:/expansion/overview";
     }
 
-//    @GetMapping("/expansion/update/{expansionId}")
-//    private String updateExpansion(@PathVariable("expansionId") Long expansionId, Model datamodel) {
-//        Optional<Expansion> optionalExpansion = expansionRepository.findById(expansionId);
-//    }
+    @GetMapping("/expansion/update/{expansionId}")
+    private String updateExpansion(@PathVariable("expansionId") Long expansionId, Model datamodel) {
+        Expansion expansion = expansionRepository.findById(expansionId).orElseThrow();
+        datamodel.addAttribute("formExpansion", expansion);
+        datamodel.addAttribute("allCards", cardRepository.findAll());
+        return "updateExpansionForm";
+    }
 
-//    @GetMapping("/new/{expansionId}")
-//    private String createNewCard(@PathVariable("expansionId") Long expansionId) {
-//        Optional<Expansion> optionalExpansion = expansionRepository.findById(expansionId);
-//
-//        if (optionalExpansion.isPresent()) {
-//            Card card = new Card(optionalExpansion.get());
-//            cardRepository.save(card);
-//        }
-//        return "redirect:/card/new";
-//    }
+    @PostMapping("/expansion/update/save")
+    private String saveUpdatedExpansion(@ModelAttribute("formExpansion") Expansion formExpansion,
+                                        BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return "updateExpansionForm";
+        }
 
-//    @GetMapping("/update/{deckId}")
-//    private String updateDeck(@PathVariable Long deckId, Model datamodel) {
-//        Deck deck = deckRepository.findById(deckId).orElseThrow();
-//        datamodel.addAttribute("formDeck", deck);
-//        datamodel.addAttribute("allCards", cardRepository.findAll());
-//        return "updateDeckForm";
-//    }
+        Expansion expansion = expansionRepository.findById(formExpansion.getExpansionId()).orElseThrow();
+        expansion.getCards().addAll(formExpansion.getCards());
+        expansionRepository.save(expansion);
 
-//    @PostMapping("/update/save")
-//    private String saveUpdatedDeck(@ModelAttribute("formDeck") Deck formDeck, BindingResult result) {
-//        if (result.hasErrors()) {
-//            return "updateDeckForm";
-//        }
-//
-//        Deck deck = deckRepository.findById(formDeck.getDeckId()).orElseThrow();
-//        deck.getCards().addAll(formDeck.getCards());
-//        deckRepository.save(deck);
-//
-//        return "redirect:/deck/overview";
-//    }
+        return "redirect:/expansion/overview";
+    }
 
 }

@@ -2,10 +2,10 @@
 <html lang="en" xmlns:th="https://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Add new cards to a deck</title>
+    <title>Update your deck</title>
 </head>
 <body>
-<h1>Add new cards to a deck</h1>
+<h1>Update your deck</h1>
 
 <form th:action="@{/deck/update/save}" method="post" th:object="${formDeck}">
   <table>
@@ -25,14 +25,14 @@
           </option>
         </select>
       </td>
-      <td>
-        <select th:field="*{cards}" id="deleteCard" multiple size="5">
-          <option th:each="card : ${allCards}"
-                  th:value="${card.cardId}"
-                  th:text="${card.name}">
-          </option>
-        </select>
-      </td>
+<!--      <td>-->
+<!--        <select th:field="*{cards}" id="deleteCard" multiple size="5">-->
+<!--          <option th:each="card : ${allCards}"-->
+<!--                  th:value="${card.cardId}"-->
+<!--                  th:text="${card.name}">-->
+<!--          </option>-->
+<!--        </select>-->
+<!--      </td>-->
     </tr>
   </table>
 
@@ -42,8 +42,7 @@
 
 </form>
 
-<a th:href="@{/deck/overview}">To deck overview</a>
-<br/>
+<a th:href="@{/deck/overview}">To deck overview</a><br/>
 <a th:href="@{/expansion/overview}">To Expansion overview</a>
 </body>
 </html>

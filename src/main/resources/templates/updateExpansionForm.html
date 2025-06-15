@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Update the expansion</title>
+</head>
+<body>
+<h1>Update the expansion</h1>
+
+<form th:action="@{/expansion/update/save}" method="post" th:object="${formExpansion}">
+
+    <table>
+        <tr>
+            <th>Expansion Name</th>
+            <th>Add cards</th>
+            <th>Delete cards</th>
+        </tr>
+
+        <tr>
+            <td><span th:text="*{name}"></span></td>
+            <td>
+                <select th:field="*{cards}" id="addCard" multiple size="5">
+                    <option th:each="card : ${allCards}"
+                            th:value="${card.cardId}"
+                            th:text="${card.name}">
+                    </option>
+                </select>
+            </td>
+
+<!--            <td>-->
+<!--                <select th:field="*{cards}" id="deleteCard" multiple size="5">-->
+<!--                    <option th:each="card : ${allCards}"-->
+<!--                            th:value="${card.cardId}"-->
+<!--                            th:text="${card.name}">-->
+<!--                    </option>-->
+<!--                </select>-->
+<!--            </td>-->
+        </tr>
+    </table>
+
+    <br/><br/>
+    <input type="submit" value="Save expansion" />
+    <input type="hidden" th:field="*{expansionId}" />
+</form>
+
+<br/><a th:href="@{/expansion/overview}">To Expansion overview</a>
+</body>
+</html>

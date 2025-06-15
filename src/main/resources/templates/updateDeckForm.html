@@ -7,7 +7,7 @@
 <body>
 <h1>Add new cards to a deck</h1>
 
-<form th:action="@{/deck/save}" method="post" th:object="${formDeck}">
+<form th:action="@{/deck/update}" method="post" th:object="${formDeck}">
 
   <label for="decks">Select deck:</label>
     <select th:field="*{deckId}" id="decks">

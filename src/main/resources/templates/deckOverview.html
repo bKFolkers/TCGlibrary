@@ -2,10 +2,10 @@
 <html lang="en" xmlns:th="https://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Overview of all the decks in the library</title>
+    <title>Overview of all the decks</title>
 </head>
 <body>
-<h1>Overview of all the decks in the library</h1>
+<h1>Overview of all the decks</h1>
 
 <form th:action="@{/deck/save}" method="post" th:object="${formDeck}">
     <table>
@@ -17,7 +17,8 @@
         <tr th:each="deck : ${allDecks}">
             <td th:text="${deck.name}"></td>
             <td th:text="${deck.numberOfCardsInDeck}"></td>
-            <td><a th:href="@{/deck/delete/{deckId}(deckId = ${deck.deckId})}">Delete deck</a></td>
+            <td><a th:href="@{/deck/update/{deckId}(deckId = ${deck.deckId})}">Update</a></td>
+            <td><a th:href="@{/deck/delete/{deckId}(deckId = ${deck.deckId})}">Delete</a></td>
             <td></td>
         </tr>
         <tr>
@@ -28,6 +29,6 @@
     </table>
 </form>
 <a th:href="@{/expansion/overview}">Show expansion overview</a><br/>
-<a th:href="@{/deck/add}">Add cards to a deck</a><br/>
+<!--<a th:href="@{/deck/add}">Add cards to a deck</a><br/>-->
 </body>
 </html>

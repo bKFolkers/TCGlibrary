@@ -1,7 +1,7 @@
 package nl.miwnn.ch16.bas.tcglibrary.controller;
 
-import nl.miwnn.ch16.bas.tcglibrary.model.Card;
 import nl.miwnn.ch16.bas.tcglibrary.model.Deck;
+import nl.miwnn.ch16.bas.tcglibrary.model.Expansion;
 import nl.miwnn.ch16.bas.tcglibrary.repositories.CardRepository;
 import nl.miwnn.ch16.bas.tcglibrary.repositories.DeckRepository;
 import org.springframework.stereotype.Controller;
@@ -33,28 +33,11 @@ public class DeckController {
         return "deckOverview";
     }
 
-    @GetMapping("/add")
-    private String addNewCardToDeck(Model datamodel) {
-        datamodel.addAttribute("formDeck", new Deck());
-        datamodel.addAttribute("allDecks", deckRepository.findAll());
-        datamodel.addAttribute("allCards", cardRepository.findAll());
-
-        return "addCardForm";
-    }
-
     @PostMapping("/save")
-    private String saveCardsToExistingDeck(@ModelAttribute("formDeck") Deck deckForm, BindingResult bindingResult) {
-        if (bindingResult.hasErrors()) {
-            return "addCardForm";
+    private String saveNewDeck(@ModelAttribute("formDeck") Deck deckToBeSaved, BindingResult bindingResult) {
+        if (!bindingResult.hasErrors()) {
+            deckRepository.save(deckToBeSaved);
         }
-
-        Deck existingDeck = deckRepository.findById(deckForm.getDeckId()).orElse(null);
-
-        if (existingDeck != null) {
-            existingDeck.getCards().addAll(deckForm.getCards());
-            deckRepository.save(existingDeck);
-        }
-
         return "redirect:/deck/overview";
     }
 
@@ -63,4 +46,25 @@ public class DeckController {
         deckRepository.deleteById(deckId);
         return "redirect:/deck/overview";
     }
+
+    @GetMapping("/update/{deckId}")
+    private String updateDeck(@PathVariable String deckId, Model datamodel) {
+        datamodel.addAttribute("formDeck", new Deck());
+        datamodel.addAttribute("allDecks", deckRepository.findAll());
+        datamodel.addAttribute("allCards", cardRepository.findAll());
+
+        return "updateDeckForm";
+    }
+
+//    @PostMapping("/expansion/save")
+//    private String saveOrUpdateExpansion(@ModelAttribute("formExpansion") Expansion expansionToBeSaved,
+//                                         BindingResult bindingResult) {
+//        if (bindingResult.hasErrors()) {
+//            System.err.println(bindingResult.getAllErrors());
+//        } else {
+//            expansionRepository.save(expansionToBeSaved);
+//        }
+//
+//        return "redirect:/expansion/overview";
+//    }
 }

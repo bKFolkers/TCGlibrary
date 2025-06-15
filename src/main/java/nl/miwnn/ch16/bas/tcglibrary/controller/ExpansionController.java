@@ -8,8 +8,6 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Optional;
-
 /**
  * @author Bas Folkers
  * Handle all requests related to card expansions
@@ -34,7 +32,7 @@ public class ExpansionController {
     @GetMapping("/expansion/new")
     private String showNewExpansionForm(Model datamodel) {
         datamodel.addAttribute("formExpansion", new Expansion());
-        return "expansionForm";
+        return "newExpansionForm";
     }
 
     @GetMapping("/expansion/delete/{expansionId}")

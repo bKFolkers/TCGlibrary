@@ -7,27 +7,43 @@
 <body>
 <h1>Add new cards to a deck</h1>
 
-<form th:action="@{/deck/update}" method="post" th:object="${formDeck}">
+<form th:action="@{/deck/update/save}" method="post" th:object="${formDeck}">
+  <table>
+    <tr>
+      <th>Deck Name</th>
+      <th>Add cards</th>
+      <th>Delete cards</th>
+    </tr>
 
-  <label for="decks">Select deck:</label>
-    <select th:field="*{deckId}" id="decks">
-      <option th:each="deck : ${allDecks}"
-            th:value="${deck.deckId}"
-            th:text="${deck.name}">
-      </option>
-    </select>
+    <tr>
+      <td><span th:text="*{name}"></span></td>
+      <td>
+        <select th:field="*{cards}" id="addCard" multiple size="5">
+          <option th:each="card : ${allCards}"
+                  th:value="${card.cardId}"
+                  th:text="${card.name}">
+          </option>
+        </select>
+      </td>
+      <td>
+        <select th:field="*{cards}" id="deleteCard" multiple size="5">
+          <option th:each="card : ${allCards}"
+                  th:value="${card.cardId}"
+                  th:text="${card.name}">
+          </option>
+        </select>
+      </td>
+    </tr>
+  </table>
 
-  <label for="cards">Select cards to add:</label>
-    <select th:field="*{cards}" id="cards" multiple size="3">
-      <option th:each="card : ${allCards}"
-            th:value="${card.cardId}"
-            th:text="${card.name}">
-      </option>
-    </select>
+  <br/><br/>
   <input type="submit" value="Save Deck" />
+  <input type="hidden" th:field="*{deckId}" />
 
 </form>
 
-<a th:href="@{/deck/overview}">Back to deck overview</a>
+<a th:href="@{/deck/overview}">To deck overview</a>
+<br/>
+<a th:href="@{/expansion/overview}">To Expansion overview</a>
 </body>
 </html>

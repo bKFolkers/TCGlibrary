@@ -9,6 +9,8 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Optional;
+
 /**
  * @author Bas Folkers
  * Handles all requests related to decks of cards
@@ -42,29 +44,29 @@ public class DeckController {
     }
 
     @GetMapping("/delete/{deckId}")
-    private String deleteCard(@PathVariable("deckId") Long deckId) {
+    private String deleteDeck(@PathVariable("deckId") Long deckId) {
         deckRepository.deleteById(deckId);
         return "redirect:/deck/overview";
     }
 
     @GetMapping("/update/{deckId}")
-    private String updateDeck(@PathVariable String deckId, Model datamodel) {
-        datamodel.addAttribute("formDeck", new Deck());
-        datamodel.addAttribute("allDecks", deckRepository.findAll());
+    private String updateDeck(@PathVariable Long deckId, Model datamodel) {
+        Deck deck = deckRepository.findById(deckId).orElseThrow();
+        datamodel.addAttribute("formDeck", deck);
         datamodel.addAttribute("allCards", cardRepository.findAll());
-
         return "updateDeckForm";
     }
 
-//    @PostMapping("/expansion/save")
-//    private String saveOrUpdateExpansion(@ModelAttribute("formExpansion") Expansion expansionToBeSaved,
-//                                         BindingResult bindingResult) {
-//        if (bindingResult.hasErrors()) {
-//            System.err.println(bindingResult.getAllErrors());
-//        } else {
-//            expansionRepository.save(expansionToBeSaved);
-//        }
-//
-//        return "redirect:/expansion/overview";
-//    }
+    @PostMapping("/update/save")
+    private String saveUpdatedDeck(@ModelAttribute("formDeck") Deck formDeck, BindingResult result) {
+        if (result.hasErrors()) {
+            return "updateDeckForm";
+        }
+
+        Deck deck = deckRepository.findById(formDeck.getDeckId()).orElseThrow();
+        deck.getCards().addAll(formDeck.getCards());
+        deckRepository.save(deck);
+
+        return "redirect:/deck/overview";
+    }
 }

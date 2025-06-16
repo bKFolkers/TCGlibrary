@@ -1,33 +1,41 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="https://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title>Overview of all the decks</title>
+<head th:replace="~{fragments/general :: baseheader(~{:: title})}">
+    <title>Replace this title</title>
 </head>
 <body>
-<h1>Overview of all the decks</h1>
 
-<form th:action="@{/deck/save}" method="post" th:object="${formDeck}">
-    <table>
-        <tr>
-            <th>Deck name</th>
-            <th>No. of cards <br/> added to deck</th>
-            <th></th>
-        </tr>
-        <tr th:each="deck : ${allDecks}">
-            <td th:text="${deck.name}"></td>
-            <td th:text="${deck.numberOfCardsInDeck}"></td>
-            <td><a th:href="@{/deck/update/{deckId}(deckId = ${deck.deckId})}">Update</a></td>
-            <td><a th:href="@{/deck/delete/{deckId}(deckId = ${deck.deckId})}">Delete</a></td>
-            <td></td>
-        </tr>
-        <tr>
-            <td><input type="text" th:field="*{name}" /></td>
-            <td><input type="submit" value="Save empty deck" /></td>
-        </tr>
+<div th:replace="~{fragments/general :: navbar}"></div>
 
-    </table>
-</form>
-<a th:href="@{/expansion/overview}">To expansion overview</a>
+<div class="container">
+    <h1>Overview of all the decks</h1>
+
+    <form th:action="@{/deck/save}" method="post" th:object="${formDeck}">
+        <table>
+            <tr>
+                <th>Deck name</th>
+                <th>No. of cards <br/> added to deck</th>
+                <th></th>
+            </tr>
+            <tr th:each="deck : ${allDecks}">
+                <td th:text="${deck.name}"></td>
+                <td th:text="${deck.numberOfCardsInDeck}"></td>
+                <td><a th:href="@{/deck/update/{deckId}(deckId = ${deck.deckId})}">Update</a></td>
+                <td><a th:href="@{/deck/delete/{deckId}(deckId = ${deck.deckId})}">Delete</a></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td><input type="text" th:field="*{name}" /></td>
+                <td><input type="submit" value="Save empty deck" /></td>
+            </tr>
+
+        </table>
+    </form>
+    <a th:href="@{/expansion/overview}">To expansion overview</a>
+</div>
+
+<div th:replace="~{fragments/general :: footer}"></div>
+<div th:replace="~{fragments/general :: bottomScripts}"></div>
+
 </body>
 </html>

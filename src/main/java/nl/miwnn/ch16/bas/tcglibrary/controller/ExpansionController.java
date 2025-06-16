@@ -69,6 +69,7 @@ public class ExpansionController {
         }
 
         Expansion expansion = expansionRepository.findById(formExpansion.getExpansionId()).orElseThrow();
+
         expansion.getCards().addAll(formExpansion.getCards());
         expansionRepository.save(expansion);
 

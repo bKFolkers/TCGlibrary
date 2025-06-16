@@ -1,27 +1,36 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="https://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title>Overview of all the cards</title>
+<head th:replace="~{fragments/general :: baseheader(~{:: title})}">
+    <title>Replace this title</title>
 </head>
 <body>
-<h1>Overview of all the cards</h1>
 
-<table>
-    <tr>
-        <th>Name</th>
-        <th>Expansion</th>
-        <th></th>
-    </tr>
-    <tr th:each="card : ${allCards}">
-        <td th:text="${card.name}"></td>
-        <td th:text="${card.expansion}"></td>
-        <td><a th:href="@{/card/delete/{cardId}(cardId = ${card.cardId})}">delete</a></td>
-    </tr>
-</table>
+<div th:replace="~{fragments/general :: navbar}"></div>
 
-<a th:href="@{/card/new}">Add new card</a><br/>
-<a th:href="@{/expansion/overview}">To expansion overview</a>
+<div class="container">
+
+    <h1>Overview of all the cards</h1>
+
+    <table>
+        <tr>
+            <th>Name</th>
+            <th>Expansion</th>
+            <th></th>
+        </tr>
+        <tr th:each="card : ${allCards}">
+            <td th:text="${card.name}"></td>
+            <td th:text="${card.expansion}"></td>
+            <td><a th:href="@{/card/delete/{cardId}(cardId = ${card.cardId})}">delete</a></td>
+        </tr>
+    </table>
+
+    <a th:href="@{/card/new}">Add new card</a><br/>
+    <a th:href="@{/expansion/overview}">To expansion overview</a>
+
+</div>
+
+<div th:replace="~{fragments/general :: footer}"></div>
+<div th:replace="~{fragments/general :: bottomScripts}"></div>
 
 </body>
 </html>

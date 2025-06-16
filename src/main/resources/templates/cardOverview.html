@@ -23,10 +23,7 @@
             <td><a th:href="@{/card/delete/{cardId}(cardId = ${card.cardId})}">delete</a></td>
         </tr>
     </table>
-
     <a th:href="@{/card/new}">Add new card</a><br/>
-    <a th:href="@{/expansion/overview}">To expansion overview</a>
-
 </div>
 
 <div th:replace="~{fragments/general :: footer}"></div>

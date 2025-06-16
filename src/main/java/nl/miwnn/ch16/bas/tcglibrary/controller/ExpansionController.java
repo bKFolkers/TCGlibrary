@@ -56,8 +56,10 @@ public class ExpansionController {
     @GetMapping("/expansion/update/{expansionId}")
     private String updateExpansion(@PathVariable("expansionId") Long expansionId, Model datamodel) {
         Expansion expansion = expansionRepository.findById(expansionId).orElseThrow();
+
         datamodel.addAttribute("formExpansion", expansion);
         datamodel.addAttribute("allCards", cardRepository.findAll());
+
         return "updateExpansionForm";
     }
 

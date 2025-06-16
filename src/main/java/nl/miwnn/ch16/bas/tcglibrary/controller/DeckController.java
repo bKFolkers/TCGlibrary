@@ -1,12 +1,17 @@
 package nl.miwnn.ch16.bas.tcglibrary.controller;
 
+import nl.miwnn.ch16.bas.tcglibrary.model.Card;
 import nl.miwnn.ch16.bas.tcglibrary.model.Deck;
 import nl.miwnn.ch16.bas.tcglibrary.repositories.CardRepository;
 import nl.miwnn.ch16.bas.tcglibrary.repositories.DeckRepository;
+import org.hibernate.ObjectNotFoundException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.Optional;
 
 /**
  * @author Bas Folkers
@@ -47,8 +52,13 @@ public class DeckController {
 
     @GetMapping("/update/{deckId}")
     private String updateDeck(@PathVariable Long deckId, Model datamodel) {
-        Deck deck = deckRepository.findById(deckId).orElseThrow();
-        datamodel.addAttribute("formDeck", deck);
+        Optional<Deck> optionalDeck = deckRepository.findById(deckId);
+
+        if (optionalDeck.isEmpty()) {
+            return "redirect:/deck/overview";
+        }
+
+        datamodel.addAttribute("formDeck", optionalDeck.get());
         datamodel.addAttribute("allCards", cardRepository.findAll());
         return "updateDeckForm";
     }

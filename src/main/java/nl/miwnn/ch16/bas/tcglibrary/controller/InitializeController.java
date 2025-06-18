@@ -48,12 +48,12 @@ public class InitializeController {
                 LocalDate.of(1999, 10, 10), 62);
         Expansion baseSet2 = makeExpansion("Base Set 2",
                 LocalDate.of(2000, 2, 24), 130);
-        Expansion teamRocket = makeExpansion("Team Rocket",
-                LocalDate.of(2000, 4, 24), 83);
-        Expansion gymHeroes = makeExpansion("Gym Heroes",
-                LocalDate.of(2000, 8, 14), 132);
-        Expansion gymChallenges = makeExpansion("Gym Challenges",
-                LocalDate.of(2000, 10, 16), 132);
+//        Expansion teamRocket = makeExpansion("Team Rocket",
+//                LocalDate.of(2000, 4, 24), 83);
+//        Expansion gymHeroes = makeExpansion("Gym Heroes",
+//                LocalDate.of(2000, 8, 14), 132);
+//        Expansion gymChallenges = makeExpansion("Gym Challenges",
+//                LocalDate.of(2000, 10, 16), 132);
 
 
         Card pikachu = makeCard("Pikachu", baseSet);

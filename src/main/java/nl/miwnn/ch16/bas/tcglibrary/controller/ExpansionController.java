@@ -1,5 +1,6 @@
 package nl.miwnn.ch16.bas.tcglibrary.controller;
 
+import nl.miwnn.ch16.bas.tcglibrary.model.Card;
 import nl.miwnn.ch16.bas.tcglibrary.model.Expansion;
 import nl.miwnn.ch16.bas.tcglibrary.repositories.CardRepository;
 import nl.miwnn.ch16.bas.tcglibrary.repositories.ExpansionRepository;
@@ -7,6 +8,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Optional;
 
 /**
  * @author Bas Folkers
@@ -37,13 +40,25 @@ public class ExpansionController {
 
     @GetMapping("/expansion/delete/{expansionId}")
     private String deleteExpansion(@PathVariable("expansionId") Long expansionId) {
-        expansionRepository.deleteById(expansionId);
+        Optional<Expansion> optionalExpansion = expansionRepository.findById(expansionId);
+        if (optionalExpansion.isPresent()) {
+            Expansion expansion = optionalExpansion.get();
+
+            // Alle kaarten loskoppelen
+            for (Card card : expansion.getCards()) {
+                card.setExpansion(null);
+                cardRepository.save(card);
+            }
+
+            // Nu pas de expansion verwijderen
+            expansionRepository.delete(expansion);
+        }
         return "redirect:/expansion/overview";
     }
 
     @PostMapping("/expansion/save")
-    private String saveOrUpdateExpansion(@ModelAttribute("formExpansion") Expansion expansionToBeSaved,
-                                         BindingResult bindingResult) {
+    private String saveNewExpansion(@ModelAttribute("formExpansion") Expansion expansionToBeSaved,
+                                    BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             System.err.println(bindingResult.getAllErrors());
         } else {
@@ -54,10 +69,14 @@ public class ExpansionController {
     }
 
     @GetMapping("/expansion/update/{expansionId}")
-    private String updateExpansion(@PathVariable("expansionId") Long expansionId, Model datamodel) {
-        Expansion expansion = expansionRepository.findById(expansionId).orElseThrow();
+    private String updateExpansion(@PathVariable Long expansionId, Model datamodel) {
+        Optional<Expansion> optionalExpansion = expansionRepository.findById(expansionId);
 
-        datamodel.addAttribute("formExpansion", expansion);
+        if (optionalExpansion.isEmpty()) {
+            return "redirect:/expansion/overview";
+        }
+
+        datamodel.addAttribute("formExpansion", optionalExpansion.get());
         datamodel.addAttribute("allCards", cardRepository.findAll());
 
         return "updateExpansionForm";
@@ -72,7 +91,16 @@ public class ExpansionController {
 
         Expansion expansion = expansionRepository.findById(formExpansion.getExpansionId()).orElseThrow();
 
+        // Voeg nieuwe kaarten toe aan de bestaande lijst (zonder clear)
         expansion.getCards().addAll(formExpansion.getCards());
+
+        // Optellen van het oude aantal toegevoegde kaarten met het nieuwe aantal kaarten uit het formulier
+        int oldAmount = expansion.getNumberOfAddedCards() != null ? expansion.getNumberOfAddedCards() : 0;
+        int newAmount = formExpansion.getCards() != null ? formExpansion.getCards().size() : 0;
+        expansion.setNumberOfAddedCards(oldAmount + newAmount);
+
+        // numberOfCards blijft ongewijzigd
+
         expansionRepository.save(expansion);
 
         return "redirect:/expansion/overview";

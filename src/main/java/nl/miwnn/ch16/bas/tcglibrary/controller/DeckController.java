@@ -70,7 +70,13 @@ public class DeckController {
         }
 
         Deck deck = deckRepository.findById(formDeck.getDeckId()).orElseThrow();
+
         deck.getCards().addAll(formDeck.getCards());
+
+        int oldAmount = deck.getNumberOfCardsInDeck() != null ? deck.getNumberOfCardsInDeck() : 0;
+        int newAmount = formDeck.getCards() != null ? formDeck.getCards().size() : 0;
+        deck.setNumberOfCardsInDeck(oldAmount + newAmount);
+
         deckRepository.save(deck);
 
         return "redirect:/deck/overview";

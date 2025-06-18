@@ -25,7 +25,11 @@ public class Deck {
     private List<Card> cards;
 
     public Integer getNumberOfCardsInDeck() {
-        return cards.size();
+        return numberOfCardsInDeck;
+    }
+
+    public void setNumberOfCardsInDeck(Integer numberOfCardsInDeck) {
+        this.numberOfCardsInDeck = numberOfCardsInDeck;
     }
 
     public Long getDeckId() {

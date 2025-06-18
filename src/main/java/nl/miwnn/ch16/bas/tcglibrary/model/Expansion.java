@@ -18,8 +18,9 @@ public class Expansion {
     private String name;
     private LocalDate releaseDate;
     private Integer numberOfCards;
+    private Integer numberOfAddedCards;
 
-    @OneToMany(mappedBy = "expansion", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "expansion")
     private List<Card> cards = new ArrayList<>();
 
     public Expansion(String name, LocalDate releaseDate, Integer numberOfCards) {
@@ -36,8 +37,18 @@ public class Expansion {
         return String.format("%s", this.name);
     }
 
-    public Integer numberOfAddedCards() {
-        return cards.size();
+    public String getAddedCardsStatus() {
+        int added = (numberOfAddedCards == null) ? 0 : numberOfAddedCards;
+        int total = (numberOfCards == null) ? 0 : numberOfCards;
+        return added + "/" + total;
+    }
+
+    public Integer getNumberOfAddedCards() {
+        return numberOfAddedCards;
+    }
+
+    public void setNumberOfAddedCards(Integer numberOfAddedCards) {
+        this.numberOfAddedCards = numberOfAddedCards;
     }
 
     public Long getExpansionId() {

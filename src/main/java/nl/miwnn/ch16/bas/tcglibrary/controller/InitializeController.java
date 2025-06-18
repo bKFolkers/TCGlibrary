@@ -8,23 +8,23 @@ import nl.miwnn.ch16.bas.tcglibrary.repositories.DeckRepository;
 import nl.miwnn.ch16.bas.tcglibrary.repositories.ExpansionRepository;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.context.event.EventListener;
+import org.springframework.stereotype.Controller;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 /**
  * @author Bas Folkers
  * Set some initial data in the database for (manual) testing purposes
  */
 
-public class initializeController {
+@Controller
+public class InitializeController {
     private final CardRepository cardRepository;
     private final ExpansionRepository expansionRepository;
     private final DeckRepository deckRepository;
 
-    public initializeController(CardRepository cardRepository,
+    public InitializeController(CardRepository cardRepository,
                                 ExpansionRepository expansionRepository,
                                 DeckRepository deckRepository) {
         this.cardRepository = cardRepository;
@@ -34,7 +34,7 @@ public class initializeController {
 
     @EventListener
     private void seed(ContextRefreshedEvent ignoredEvent){
-        if (expansionRepository.count() > 0) {
+        if (expansionRepository.count() == 0) {
             initializeDB();
         }
     }
@@ -55,15 +55,16 @@ public class initializeController {
         Expansion gymChallenges = makeExpansion("Gym Challenges",
                 LocalDate.of(2000, 10, 16), 132);
 
-        Deck roaringMoon = makeDeck("Roaring Moon");
-        Deck gardevoir = makeDeck("Gardevoir");
 
-        Card pikachu = makeCard("Pikachu");
-        Card blastoise = makeCard("Blastoise");
-        Card charizard = makeCard("Charizard");
-        Card venusaur = makeCard("Venusaur");
-        Card Ratata = makeCard("Ratata");
-        Card diglet = makeCard("Diglet");
+        Card pikachu = makeCard("Pikachu", baseSet);
+        Card blastoise = makeCard("Blastoise", baseSet);
+        Card charizard = makeCard("Charizard", jungle);
+        Card venusaur = makeCard("Venusaur", fossil);
+        Card ratata = makeCard("Ratata", baseSet2);
+        Card diglet = makeCard("Diglet", baseSet2);
+
+        Deck roaringMoon = makeDeck("Roaring Moon", pikachu, charizard, ratata);
+        Deck gardevoir = makeDeck("Gardevoir", blastoise, venusaur, diglet);
     }
 
     private Expansion makeExpansion(String name, LocalDate releaseDate, Integer numberOfCards) {
@@ -75,25 +76,23 @@ public class initializeController {
         return expansion;
     }
 
-    private Card makeCard(String name) {
-        Card card = new Card();
-
-        card.setName(name);
-
-
-        cardRepository.save(card);
-        return card;
-    }
-
     private Deck makeDeck(String name, Card ... cards) {
         Deck deck = new Deck();
-
         deck.setName(name);
+        deck.setCards(new ArrayList<>());
 
-        List<Card> cardList = new ArrayList<>(Arrays.asList(cards));
-        deck.setCards(cardList);
+        List<Card> cardSet = new ArrayList<Card>(List.of(cards));
+        deck.setCards(cardSet);
 
-        deckRepository.save(deck);
-        return deck;
+        deck.setNumberOfCardsInDeck(0);
+        return deckRepository.save(deck);
+    }
+
+    private Card makeCard(String name, Expansion expansion) {
+        Card card = new Card();
+        card.setName(name);
+        card.setExpansion(expansion);
+        cardRepository.save(card);
+        return card;
     }
 }

@@ -23,9 +23,9 @@
             <td th:text="${expansion.name}"></td>
             <td th:text="${expansion.releaseDate}"></td>
             <td th:text="${expansion.numberOfCards}"></td>
-            <td th:text="${expansion.numberOfAddedCards}"></td>
+            <td th:text="${expansion.getAddedCardsStatus()}"></td>
             <td><a th:href="@{/expansion/update/{expansionId}(expansionId = ${expansion.expansionId})}">Update</a></td>
-            <td><a th:href="@{/expansion/delete/{expansionId}(expansionId = ${expansion.expansionId})}">Delete</a></td>
+            <td><a th:href="@{/expansion/delete/{expansionId}(expansionId = ${expansion.expansionId})}">Delete Expansion</a></td>
         </tr>
 
     </table>

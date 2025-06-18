@@ -31,15 +31,15 @@
                     </select>
                 </td>
 
-                <!--            TODO Functionality of delete cards option needs to be implemented-->
-                <!--            <td>-->
-                <!--                <select th:field="*{cards}" id="deleteCard" multiple size="5">-->
-                <!--                    <option th:each="card : ${allCards}"-->
-                <!--                            th:value="${card.cardId}"-->
-                <!--                            th:text="${card.name}">-->
-                <!--                    </option>-->
-                <!--                </select>-->
-                <!--            </td>-->
+                <td>
+                    <select name="deleteCardIds" id="deleteCard" multiple size="5">
+                        <option th:each="card : ${formExpansion.cards}"
+                                th:value="${card.cardId}"
+                                th:text="${card.name}">
+                        </option>
+                    </select>
+                </td>
+
             </tr>
         </table>
 
@@ -48,7 +48,6 @@
         <input type="hidden" th:field="*{expansionId}" />
     </form>
 
-    <br/><a th:href="@{/expansion/overview}">To Expansion overview</a>
 </div>
 
 <div th:replace="~{fragments/general :: footer}"></div>

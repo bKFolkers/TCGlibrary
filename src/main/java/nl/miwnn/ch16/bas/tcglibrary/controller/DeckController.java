@@ -64,18 +64,27 @@ public class DeckController {
     }
 
     @PostMapping("/update/save")
-    private String saveUpdatedDeck(@ModelAttribute("formDeck") Deck formDeck, BindingResult bindingResult) {
+    private String saveUpdatedDeck(@ModelAttribute("formDeck") Deck formDeck,
+                                   @RequestParam(required = false) List<Long> removeCardIds,
+                                   BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return "updateDeckForm";
         }
 
         Deck deck = deckRepository.findById(formDeck.getDeckId()).orElseThrow();
 
-        deck.getCards().addAll(formDeck.getCards());
+        // Kaarten toevoegen
+        if (formDeck.getCards() != null) {
+            deck.getCards().addAll(formDeck.getCards());
+        }
 
-        int oldAmount = deck.getNumberOfCardsInDeck() != null ? deck.getNumberOfCardsInDeck() : 0;
-        int newAmount = formDeck.getCards() != null ? formDeck.getCards().size() : 0;
-        deck.setNumberOfCardsInDeck(oldAmount + newAmount);
+        // Kaarten verwijderen
+        if (removeCardIds != null) {
+            deck.getCards().removeIf(card -> removeCardIds.contains(card.getCardId()));
+        }
+
+        // Tel het daadwerkelijke aantal kaarten na bewerking
+        deck.setNumberOfCardsInDeck(deck.getCards().size());
 
         deckRepository.save(deck);
 

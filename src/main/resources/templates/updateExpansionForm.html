@@ -17,14 +17,15 @@
             <tr>
                 <th>Expansion Name</th>
                 <th>Add cards</th>
-                <th>Delete cards</th>
+                <th>Remove cards</th>
             </tr>
 
             <tr>
                 <td><span th:text="*{name}"></span></td>
+
                 <td>
-                    <select th:field="*{cards}" id="addCard" multiple size="5">
-                        <option th:each="card : ${allCards}"
+                    <select th:field="*{cards}" multiple size="5">
+                        <option th:each="card : ${availableCards}"
                                 th:value="${card.cardId}"
                                 th:text="${card.name}">
                         </option>
@@ -32,14 +33,13 @@
                 </td>
 
                 <td>
-                    <select name="deleteCardIds" id="deleteCard" multiple size="5">
-                        <option th:each="card : ${formExpansion.cards}"
+                    <select name="deleteCardIds" multiple size="5">
+                        <option th:each="card : ${collectedCards}"
                                 th:value="${card.cardId}"
                                 th:text="${card.name}">
                         </option>
                     </select>
                 </td>
-
             </tr>
         </table>
 

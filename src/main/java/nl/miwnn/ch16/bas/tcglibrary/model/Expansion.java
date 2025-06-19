@@ -101,10 +101,12 @@ public class Expansion {
             return 0.0;
         }
 
-        return cards.stream()
+        double sum = cards.stream()
                 .filter(card -> card.getMarketPrice() != null)
                 .mapToDouble(Card::getMarketPrice)
                 .sum();
+
+        return Math.round(sum * 100.0) / 100.0;
     }
 
     public void setExpansionWorth(Double expansionWorth) {

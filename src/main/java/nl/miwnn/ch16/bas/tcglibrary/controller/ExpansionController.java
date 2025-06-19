@@ -9,6 +9,8 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -76,14 +78,23 @@ public class ExpansionController {
             return "redirect:/expansion/overview";
         }
 
-        datamodel.addAttribute("formExpansion", optionalExpansion.get());
-        datamodel.addAttribute("allCards", cardRepository.findAll());
+        Expansion expansion = optionalExpansion.get();
+
+        List<Card> allCards = cardRepository.findAll();
+        List<Card> collectedCards = expansion.getCards();
+        List<Card> availableCards = new ArrayList<>(allCards);
+        availableCards.removeAll(collectedCards);
+
+        datamodel.addAttribute("availableCards", availableCards);
+        datamodel.addAttribute("collectedCards", collectedCards);
+        datamodel.addAttribute("formExpansion", expansion);
 
         return "updateExpansionForm";
     }
 
     @PostMapping("/expansion/update/save")
     private String saveUpdatedExpansion(@ModelAttribute("formExpansion") Expansion formExpansion,
+                                        @RequestParam(value = "deleteCardIds", required = false) Long[] deleteCardIds,
                                         BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return "updateExpansionForm";
@@ -91,18 +102,33 @@ public class ExpansionController {
 
         Expansion expansion = expansionRepository.findById(formExpansion.getExpansionId()).orElseThrow();
 
-        // Voeg nieuwe kaarten toe aan de bestaande lijst (zonder clear)
-        expansion.getCards().addAll(formExpansion.getCards());
+        // 1. Verwijder geselecteerde kaarten
+        if (deleteCardIds != null) {
+            for (Long cardId : deleteCardIds) {
+                cardRepository.findById(cardId).ifPresent(card -> {
+                    expansion.getCards().remove(card);
+                    card.setExpansion(null);
+                    cardRepository.save(card);
+                });
+            }
+        }
 
-        // Optellen van het oude aantal toegevoegde kaarten met het nieuwe aantal kaarten uit het formulier
-        int oldAmount = expansion.getNumberOfAddedCards() != null ? expansion.getNumberOfAddedCards() : 0;
-        int newAmount = formExpansion.getCards() != null ? formExpansion.getCards().size() : 0;
-        expansion.setNumberOfAddedCards(oldAmount + newAmount);
+        // 2. Voeg nieuwe kaarten toe (ook duplicaten toegestaan)
+        if (formExpansion.getCards() != null) {
+            for (Card card : formExpansion.getCards()) {
+                // Altijd koppelen, zelfs als de kaart al voorkomt
+                cardRepository.findById(card.getCardId()).ifPresent(c -> {
+                    c.setExpansion(expansion);
+                    cardRepository.save(c);
+                    expansion.getCards().add(c);
+                });
+            }
+        }
 
-        // numberOfCards blijft ongewijzigd
+        // 3. Update count van toegevoegde kaarten
+        expansion.setNumberOfAddedCards(expansion.getCards().size());
 
         expansionRepository.save(expansion);
-
         return "redirect:/expansion/overview";
     }
 

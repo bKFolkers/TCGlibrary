@@ -26,7 +26,6 @@ public class Card {
 
 
     @ManyToOne
-    @JoinColumn(name = "expansion_expansion_id")
     private Expansion expansion;
 
     public Card(Expansion expansion) {

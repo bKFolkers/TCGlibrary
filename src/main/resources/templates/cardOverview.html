@@ -19,18 +19,18 @@
             <th>Rarity</th>
             <th>Type</th>
             <th>Market Price</th>
-            <th>Last updated</th>
-            <th>Expansion</th>
+            <th>Last Price update</th>
+            <th>Card</th>
             <th></th>
         </tr>
         <tr th:each="card : ${allCards}">
             <td th:text="${card.name}"></td>
-            <td th:text="${card.expansion}"></td>
+            <td th:text="${card.getExpansion()}"></td>
             <td th:text="${card.rarity}"></td>
             <td th:text="${card.subTypeName}"></td>
             <td th:text="'$' + ${card.marketPrice}"></td>
             <td th:text="${#temporals.format(card.modifiedOn, 'dd-MM-yyyy')}"></td>
-            <td th:text="${card.imageUrl}"></td>
+            <td><img th:src="${card.imageUrl}" alt="Card image" class="img-thumbnail" style="max-width: 100px;"/></td>
             <td><a th:href="@{/card/delete/{cardId}(cardId = ${card.cardId})}">delete</a></td>
         </tr>
     </table>

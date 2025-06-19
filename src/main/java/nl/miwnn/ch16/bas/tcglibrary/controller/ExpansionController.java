@@ -28,7 +28,7 @@ public class ExpansionController {
 
     @GetMapping({"/", "/expansion/overview"})
     private String showExpansionOverview(Model datamodel) {
-        datamodel.addAttribute("allexpansions", expansionRepository.findAll());
+        datamodel.addAttribute("allExpansions", expansionRepository.findAll());
         return "expansionOverview";
     }
 

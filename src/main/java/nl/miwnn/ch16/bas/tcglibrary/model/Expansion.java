@@ -23,6 +23,8 @@ public class Expansion {
 
     private Integer numberOfAddedCards;
 
+    private Double expansionWorth;
+
     @OneToMany(mappedBy = "expansion")
     private List<Card> cards = new ArrayList<>();
 
@@ -92,6 +94,21 @@ public class Expansion {
 
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
+    }
+
+    public Double getExpansionWorth() {
+        if (cards == null) {
+            return 0.0;
+        }
+
+        return cards.stream()
+                .filter(card -> card.getMarketPrice() != null)
+                .mapToDouble(Card::getMarketPrice)
+                .sum();
+    }
+
+    public void setExpansionWorth(Double expansionWorth) {
+        this.expansionWorth = expansionWorth;
     }
 
     public List<Card> getCards() {

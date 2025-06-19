@@ -2,7 +2,7 @@ package nl.miwnn.ch16.bas.tcglibrary.model;
 
 import jakarta.persistence.*;
 
-import java.util.List;
+import java.time.LocalDateTime;
 
 /**
  * @author Bas Folkers
@@ -14,8 +14,15 @@ public class Card {
     @Id @GeneratedValue
     private Long cardId;
 
+    @Column(unique = true)
     private String name;
-    private Double price;
+
+    private String rarity;
+    private String subTypeName;
+    private Double marketPrice;
+    private LocalDateTime modifiedOn;
+    private String imageUrl;
+
 
     @ManyToOne
     private Expansion expansion;
@@ -47,6 +54,46 @@ public class Card {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getRarity() {
+        return rarity;
+    }
+
+    public void setRarity(String rarity) {
+        this.rarity = rarity;
+    }
+
+    public String getSubTypeName() {
+        return subTypeName;
+    }
+
+    public void setSubTypeName(String subTypeName) {
+        this.subTypeName = subTypeName;
+    }
+
+    public Double getMarketPrice() {
+        return marketPrice;
+    }
+
+    public void setMarketPrice(Double marketPrice) {
+        this.marketPrice = marketPrice;
+    }
+
+    public LocalDateTime getModifiedOn() {
+        return modifiedOn;
+    }
+
+    public void setModifiedOn(LocalDateTime modifiedOn) {
+        this.modifiedOn = modifiedOn;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 
     public Expansion getExpansion() {

@@ -15,9 +15,12 @@ import java.util.List;
 public class Expansion {
     @Id @GeneratedValue
     private Long expansionId;
+
     private String name;
     private LocalDate releaseDate;
     private Integer numberOfCards;
+    private String imageUrl;
+
     private Integer numberOfAddedCards;
 
     @OneToMany(mappedBy = "expansion")
@@ -81,6 +84,14 @@ public class Expansion {
 
     public void setNumberOfCards(Integer numberOfCards) {
         this.numberOfCards = numberOfCards;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 
     public List<Card> getCards() {

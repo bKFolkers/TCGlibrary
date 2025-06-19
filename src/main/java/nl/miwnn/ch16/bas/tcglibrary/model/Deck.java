@@ -15,8 +15,9 @@ public class Deck {
     private Long deckId;
 
     private String name;
-    private Integer numberOfCardsInDeck;
     private Double price;
+
+    private Integer numberOfCardsInDeck;
 
     @ManyToMany
     private List<Card> cards;

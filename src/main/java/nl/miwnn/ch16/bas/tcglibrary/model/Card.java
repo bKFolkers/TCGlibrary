@@ -3,6 +3,7 @@ package nl.miwnn.ch16.bas.tcglibrary.model;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 /**
  * @author Bas Folkers
@@ -20,7 +21,7 @@ public class Card {
     private String rarity;
     private String subTypeName;
     private Double marketPrice;
-    private LocalDateTime modifiedOn;
+    private LocalDateTime modifiedOn = LocalDateTime.now();
     private String imageUrl;
 
 
@@ -73,6 +74,9 @@ public class Card {
     }
 
     public Double getMarketPrice() {
+        if(marketPrice == null){
+            return marketPrice = 0.0;
+        }
         return marketPrice;
     }
 

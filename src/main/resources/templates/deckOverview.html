@@ -15,11 +15,13 @@
             <tr>
                 <th>Deck name</th>
                 <th>No. of cards <br/> added to deck</th>
+                <th>Total price</th>
                 <th></th>
             </tr>
             <tr th:each="deck : ${allDecks}">
                 <td th:text="${deck.name}"></td>
-                <td th:text="${deck.numberOfCardsInDeck}"></td>
+                <td th:text="${deck.addedCardsStatus}"></td>
+                <td th:text="'$' + ${deck.deckPrice}"></td>
                 <td><a th:href="@{/deck/update/{deckId}(deckId = ${deck.deckId})}">Update</a></td>
                 <td><a th:href="@{/deck/delete/{deckId}(deckId = ${deck.deckId})}">Delete</a></td>
                 <td></td>

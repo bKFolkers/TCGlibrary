@@ -9,6 +9,8 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -46,8 +48,18 @@ public class CardController {
 
     @GetMapping("/new")
     private String showNewCardForm(Model datamodel) {
+        Card newCard = new Card();
+        newCard.setModifiedOn(LocalDateTime.now());
+
         datamodel.addAttribute("formCard", new Card());
         datamodel.addAttribute("allExpansions", expansionRepository.findAll());
+
+        List<String> allRarities = List.of("Common", "Uncommon", "Rare", "Holo Rare");
+        datamodel.addAttribute("allRarities", allRarities);
+
+        List<String> allTypes = List.of("Normal", "Holofoil");
+        datamodel.addAttribute("allTypes", allTypes);
+
         return "newCardForm";
     }
 

@@ -81,6 +81,13 @@ public class ExpansionController {
         Expansion expansion = optionalExpansion.get();
 
         List<Card> allCards = cardRepository.findAll();
+        List<Card> filteredCards = new ArrayList<>();
+        for (Card allCard : allCards) {
+            if (allCard.getExpansion().getExpansionId().equals(expansionId)) {
+                filteredCards.add(allCard);
+            }
+        }
+        allCards = filteredCards;
         List<Card> collectedCards = expansion.getCards();
         List<Card> availableCards = new ArrayList<>(allCards);
         availableCards.removeAll(collectedCards);

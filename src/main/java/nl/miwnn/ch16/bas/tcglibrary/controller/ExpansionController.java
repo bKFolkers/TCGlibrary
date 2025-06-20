@@ -73,6 +73,7 @@ public class ExpansionController {
     @GetMapping("/expansion/update/{expansionId}")
     private String updateExpansion(@PathVariable Long expansionId, Model datamodel) {
         Optional<Expansion> optionalExpansion = expansionRepository.findById(expansionId);
+//        TODO Kijken naar de mogelijkheid om hier expansionName te gebruiken ipv id!!! ----------------------
 
         if (optionalExpansion.isEmpty()) {
             return "redirect:/expansion/overview";
@@ -100,7 +101,13 @@ public class ExpansionController {
             return "updateExpansionForm";
         }
 
-        Expansion expansion = expansionRepository.findById(formExpansion.getExpansionId()).orElseThrow();
+        Optional<Expansion> optionalExpansion = expansionRepository.findById(formExpansion.getExpansionId());
+
+        if (optionalExpansion.isEmpty()) {
+            return "redirect:/expansion/overview"; // Of geef foutmelding
+        }
+
+        Expansion expansion = optionalExpansion.get();
 
         // 1. Verwijder geselecteerde kaarten
         if (deleteCardIds != null) {
@@ -108,7 +115,7 @@ public class ExpansionController {
                 cardRepository.findById(cardId).ifPresent(card -> {
                     expansion.getCards().remove(card);
                     card.setExpansion(null);
-//                    card.setCollectedCards(false);
+//              card.setCollected(false);
                     cardRepository.save(card);
                 });
             }
@@ -117,11 +124,10 @@ public class ExpansionController {
         // 2. Voeg nieuwe kaarten toe (ook duplicaten toegestaan)
         if (formExpansion.getCards() != null) {
             for (Card card : formExpansion.getCards()) {
-                // Altijd koppelen, zelfs als de kaart al voorkomt
                 cardRepository.findById(card.getCardId()).ifPresent(c -> {
                     c.setExpansion(expansion);
+//              c.setCollected(true);
                     cardRepository.save(c);
-//                    card.setCollectedCards(true);
                     expansion.getCards().add(c);
                 });
             }
@@ -130,7 +136,9 @@ public class ExpansionController {
         // 3. Update count van toegevoegde kaarten
         expansion.setNumberOfAddedCards(expansion.getCards().size());
 
+        // 4. Sla de expansion op
         expansionRepository.save(expansion);
+
         return "redirect:/expansion/overview";
     }
 }

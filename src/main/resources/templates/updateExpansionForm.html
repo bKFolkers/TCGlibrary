@@ -12,6 +12,7 @@
     <h1>Update the expansion</h1>
 
     <form th:action="@{/expansion/update/save}" method="post" th:object="${formExpansion}">
+        <input type="hidden" th:field="*{expansionId}" />
 
         <table>
             <tr>

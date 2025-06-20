@@ -24,6 +24,7 @@ public class Card {
     private LocalDateTime modifiedOn = LocalDateTime.now();
     private String imageUrl;
 
+    private boolean collectedCards = false;
 
     @ManyToOne
     private Expansion expansion;
@@ -98,6 +99,14 @@ public class Card {
 
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
+    }
+
+    public boolean isCollectedCards() {
+        return collectedCards;
+    }
+
+    public void setCollectedCards(boolean collectedCards) {
+        this.collectedCards = collectedCards;
     }
 
     public Expansion getExpansion() {

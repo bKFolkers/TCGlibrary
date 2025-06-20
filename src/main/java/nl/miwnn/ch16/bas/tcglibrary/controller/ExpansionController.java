@@ -81,13 +81,6 @@ public class ExpansionController {
         Expansion expansion = optionalExpansion.get();
 
         List<Card> allCards = cardRepository.findAll();
-        List<Card> filteredCards = new ArrayList<>();
-        for (Card allCard : allCards) {
-            if (allCard.getExpansion().getExpansionId().equals(expansionId)) {
-                filteredCards.add(allCard);
-            }
-        }
-        allCards = filteredCards;
         List<Card> collectedCards = expansion.getCards();
         List<Card> availableCards = new ArrayList<>(allCards);
         availableCards.removeAll(collectedCards);
@@ -115,6 +108,7 @@ public class ExpansionController {
                 cardRepository.findById(cardId).ifPresent(card -> {
                     expansion.getCards().remove(card);
                     card.setExpansion(null);
+//                    card.setCollectedCards(false);
                     cardRepository.save(card);
                 });
             }
@@ -127,6 +121,7 @@ public class ExpansionController {
                 cardRepository.findById(card.getCardId()).ifPresent(c -> {
                     c.setExpansion(expansion);
                     cardRepository.save(c);
+//                    card.setCollectedCards(true);
                     expansion.getCards().add(c);
                 });
             }
@@ -138,5 +133,4 @@ public class ExpansionController {
         expansionRepository.save(expansion);
         return "redirect:/expansion/overview";
     }
-
 }

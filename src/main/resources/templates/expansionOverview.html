@@ -13,11 +13,12 @@
     <table>
 
         <tr>
-            <th>Expansion name</th>
+            <th>Name</th>
             <th>Release date</th>
             <th>No. of cards <br/> in Expansion</th>
             <th>No. of cards <br/> collected</th>
             <th>Total Price</th>
+            <th>Expansion Image</th>
             <th></th>
         </tr>
         <tr th:each="expansion : ${allExpansions}">
@@ -26,13 +27,16 @@
             <td th:text="${expansion.numberOfCards}"></td>
             <td th:text="${expansion.getAddedCardsStatus()}"></td>
             <td th:text="'$' + ${expansion.getExpansionWorth()}"></td>
-            <td><a th:href="@{/expansion/update/{expansionId}(expansionId = ${expansion.expansionId})}">Update</a></td>
-            <td><a th:href="@{/expansion/delete/{expansionId}(expansionId = ${expansion.expansionId})}">Delete Expansion</a></td>
+
+            <td><img th:src="${expansion.getImageUrl()}" alt="Expansion image" class="img-thumbnail" style="max-width: 100px;"/></td>
+
+            <td><a th:href="@{/expansion/update/{expansionId}(expansionId = ${expansion.expansionId})}">Update <br/> Expansion</a></td>
+            <td><a th:href="@{/expansion/delete/{expansionId}(expansionId = ${expansion.expansionId})}">Delete <br/> Expansion</a></td>
         </tr>
 
     </table>
 
-    <a th:href="@{/expansion/new}">Add an expansion</a><br/>
+    <a th:href="@{/expansion/new}">Add Expansion</a><br/>
 </div>
 
 <div th:replace="~{fragments/general :: footer}"></div>

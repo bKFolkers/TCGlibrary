@@ -3,7 +3,6 @@ package nl.miwnn.ch16.bas.tcglibrary.model;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 
 /**
  * @author Bas Folkers
@@ -24,7 +23,7 @@ public class Card {
     private LocalDateTime modifiedOn = LocalDateTime.now();
     private String imageUrl;
 
-    private boolean collectedCards = false;
+    private boolean collected = false;
 
     @ManyToOne
     private Expansion expansion;
@@ -101,12 +100,12 @@ public class Card {
         this.imageUrl = imageUrl;
     }
 
-    public boolean isCollectedCards() {
-        return collectedCards;
+    public boolean isCollected() {
+        return collected;
     }
 
-    public void setCollectedCards(boolean collectedCards) {
-        this.collectedCards = collectedCards;
+    public void setCollected(boolean collectedCards) {
+        this.collected = collectedCards;
     }
 
     public Expansion getExpansion() {

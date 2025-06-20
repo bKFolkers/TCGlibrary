@@ -9,7 +9,7 @@
 
 <div class="container">
     <h1>Overview of all the Expansions</h1>
-
+<!--    <div th:replace="~{fragments/expansion} :: expansionCards(${allExpansions})">-->
     <table>
 
         <tr>
@@ -37,6 +37,7 @@
     </table>
 
     <a th:href="@{/expansion/new}">Add Expansion</a><br/>
+
 </div>
 
 <div th:replace="~{fragments/general :: footer}"></div>

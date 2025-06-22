@@ -1,12 +1,15 @@
 .nav-tabs {
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
     background-color: rgba(0, 0, 0, 0.4);
     border-bottom: 3px solid rgb(59, 76, 202);
 }
 .nav-tabs .nav-link {
+    text-align: center;
+    text-shadow: 2px 2px 4px black;
     color: white;
+    font-family: 'Press Start 2P', monospace;
     font-weight: bold;
-    font-size: x-large;
+    font-size: 20px;
     padding: 10px 20px;
 }
 .nav-tabs .nav-link.active {
@@ -25,15 +28,18 @@
 
 .pageTitle {
     font-family: 'Press Start 2P', monospace;
-    padding-top: 20px;
-    padding-bottom: 20px;
     font-size: 80px;
-    color: black;
+    text-shadow: 2px 2px 4px white;
+    color: rgba(0, 0, 0, 1.0);
     text-align: center;
+    padding-top: 30px;
+    padding-bottom: 20px;
 }
 
 .btn {
-    background: rgb(255, 222, 0);
+    font-weight: bold;
+    border-radius: 12px;
+    background: rgba(255, 222, 0, 0.8);
     color: black;
 }
 
@@ -54,9 +60,13 @@ body {
     color: white;
 }
 .card .card-title {
+    text-shadow: 2px 2px 4px black;
     font-family: 'Press Start 2P', monospace;
     padding: 7px;
     font-size: 30px;
+}
+.footer-text {
+    text-shadow: 2px 2px 2px black;
 }
 .card .card-footer {
     border-bottom-left-radius: 18px;

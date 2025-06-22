@@ -7,30 +7,39 @@
 
     <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
     <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap-icons/font/bootstrap-icons.min.css}">
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+
 
     <link rel="stylesheet" type="text/css" href="/css/library.css">
 </head>
 <body>
 
 <div th:fragment="navbar">
-    <ul class="nav justify-content-center ">
+    <ul class="nav nav-tabs shadow">
         <li class="nav-item">
-            <a class="nav-link" th:href="@{/expansion/overview}">Expansions</a>
+            <a class="nav-link" th:href="@{/expansion/overview}">
+                <img src="https://ia600505.us.archive.org/14/items/PokemonIcon/pokemon%20icon.png"
+                     alt="Logo" width="40" height="40" class="d-inline-block align-text-top"> Expansions</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" th:href="@{/card/overview}">Cards</a>
+            <a class="nav-link" th:href="@{/card/overview}">
+                <img src="https://cdn3.iconfinder.com/data/icons/card-games-colored/48/Games_CardGames_Artboard_23-512.png"
+                     alt="Logo" width="40" height="40" class="d-inline-block align-text-top">Cards</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" th:href="@{/deck/overview}">Decks</a>
+            <a class="nav-link" th:href="@{/deck/overview}">
+                <img src="https://cdn3.iconfinder.com/data/icons/card-games-colored/48/Games_CardGames_Artboard_22-512.png"
+                     alt="Logo" width="40" height="40" class="d-inline-block align-text-top">Decks</a>
         </li>
     </ul>
 </div>
 
 <div th:fragment="footer">
-    <br/><footer><p class="text-center text text-muted"> Kopierecht Bas Folkers &copy;2025</p></footer>
+    <br/><footer><p class="text-center text text-muted shadow"> Kopierecht Bas Folkers &copy;2025</p></footer>
 </div>
 
 <div th:fragment="bottomScripts">
+    <script th:src="@{/webjars/popper.js/js/popper.min.js}"></script>
     <script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
 </div>
 

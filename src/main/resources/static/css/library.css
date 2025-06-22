@@ -1,3 +1,70 @@
+.nav-tabs {
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    background-color: rgba(0, 0, 0, 0.4);
+    border-bottom: 3px solid rgb(59, 76, 202);
+}
+.nav-tabs .nav-link {
+    color: white;
+    font-weight: bold;
+    font-size: x-large;
+    padding: 10px 20px;
+}
+.nav-tabs .nav-link.active {
+    background-color: rgb(59, 76, 202);
+    color: white;
+    border: none;
+}
+.nav-tabs .nav-link:hover {
+    background-color: rgb(59, 76, 202);
+    color: white;
+}
+.nav-tabs .nav-link img {
+    margin-right: 5px;
+    vertical-align: middle;
+}
+
+.pageTitle {
+    font-family: 'Press Start 2P', monospace;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    font-size: 80px;
+    color: black;
+    text-align: center;
+}
+
+.btn {
+    background: rgb(255, 222, 0);
+    color: black;
+}
+
+body {
+    background-image: url('https://files.123freevectors.com/wp-content/original/106565-blue-and-green-abstract.jpg');
+    background-size: cover;
+    background-attachment: fixed;
+    background-position: center;
+}
+
+.card {
+    border-radius: 20px;
+}
+.card .card-header {
+    border-top-left-radius: 18px;
+    border-top-right-radius: 18px;
+    background-color: rgb(59, 76, 202);
+    color: white;
+}
+.card .card-title {
+    font-family: 'Press Start 2P', monospace;
+    padding: 7px;
+    font-size: 30px;
+}
+.card .card-footer {
+    border-bottom-left-radius: 18px;
+    border-bottom-right-radius: 18px;
+    background-color: rgb(211, 47, 47);
+    color: white;
+}
+
 .cirkel {
     border-radius: 50%;
 }
@@ -6,3 +73,4 @@
     height: 100px;
     width: 100px;
 }
+

@@ -8,10 +8,15 @@
 <div th:replace="~{fragments/general :: navbar}"></div>
 
 <div class="container">
-    <h1>Overview of all the Expansions</h1>
-    <a th:href="@{/expansion/new}">Add Expansion</a><br/>
+    <h1 class="pageTitle">All Expansions</h1>
+
+    <div class="mb-3 d-flex justify-content-center">
+        <a th:href="@{/expansion/new}" class="btn btn-dark">Add Expansion</a>
+    </div>
+
 
     <div th:replace="~{fragments/expansion :: expansionCards(${allExpansions})}"></div>
+
 <!--        <table>-->
 
 <!--            <tr>-->
@@ -41,12 +46,12 @@
 
 <!--        </table>-->
 
-
-
 </div>
 
     <div th:replace="~{fragments/general :: footer}"></div>
     <div th:replace="~{fragments/general :: bottomScripts}"></div>
+
+<!--<div th:replace="~{fragments/card :: cardFormModal (${formCard}, ${allExpansions}, ${#fields})}"></div>-->
 
 </body>
 </html>

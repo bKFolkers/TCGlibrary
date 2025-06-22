@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+
+<body>
+
+<!-- Fragment om alle cards te tonen -->
+<div th:fragment="expansionCards(expansions)" class="row row-cols-1 row-cols-md-3 g-2">
+    <div th:each="expansion : ${expansions}"
+         th:insert="~{:: expansionCard(expansion)}">
+    </div>
+</div>
+
+</body>
+</html>

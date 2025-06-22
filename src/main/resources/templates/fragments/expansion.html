@@ -1,10 +1,15 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 
+
 <body>
 
+<div>
+    <a th:href="@{/expansion/new}">Add Expansion</a>
+</div>
+
 <!-- Fragment om alle expansions te tonen -->
-<div th:fragment="expansionCards(expansions)" class="row row-cols-1 row-cols-md-3 g-2">
+<div th:fragment="expansionCards(expansions)" class="row row-cols-1 row-cols-md-3 g-5">
     <div th:each="expansion : ${expansions}"
          th:insert="~{:: expansionCard(expansion)}">
     </div>
@@ -12,10 +17,11 @@
 
 <!-- Fragment voor 1 expansion-kaart -->
 <div th:fragment="expansionCard(expansion)" class="col">
-    <div class="card h-100">
-        <div class="card-header">
-            <a th:href="@{/expansion/detail/{expansionName}(expansionName = ${expansion.name})}">
-                <h1 class="card-title text-center" th:text="${expansion.name}"></h1>
+    <div class="card h-100 d-flex flex-column m-2 border-black shadow">
+        <div class="card-header text-center">
+            <a th:href="@{/expansion/detail/{expansionName}(expansionName = ${expansion.name})}"
+               class="text-white text-decoration-none">
+                <h1 class="card-title mb-0 fw-bold"  th:text="${expansion.name}"></h1>
             </a>
         </div>
         <a th:href="@{/expansion/detail/{expansionName}(expansionName = ${expansion.name})}">
@@ -23,22 +29,100 @@
                  class="card-img-top object-fit-md-contain obj"
                  th:alt="|Cover for ${expansion.name}|"/>
         </a>
-        <ul class="list-group list-group-flush">
-            <li class="list-group-item" th:each="expansion : ${expansion.numberOfAddedCards}">
-                <a th:href="@{expansion/detail/}" th:text="|Cards collected|"></a>
-            </li>
-        </ul>
-        <div class="card-body" style="">
-            <p class="card-text" th:text="${expansion.description}"></p>
+        <div class="card-body flex-grow-1 fw-bold">
+            <p class="card-text text-muted text-center" th:text="${expansion.description}"></p>
         </div>
-        <div class="card-footer">
-            <small class="text-body-secondary"
+<!--        <ul class="list-group list-group-flush">-->
+<!--            <li class="list-group-item" th:each="expansion : ${expansion.numberOfAddedCards}">-->
+<!--                <a th:href="@{expansion/detail/}" th:text="|Cards collected|"></a>-->
+<!--            </li>-->
+<!--        </ul>-->
+        <a th:href="@{/expansion/detail/{expansionName}(expansionName = ${expansion.name})}"
+           class="card-footer text-center text-decoration-none d-block">
+            <small class="fw-semibold"
                    th:text="|${expansion.numberOfAddedCards} out of ${expansion.numberOfCards} cards collected|">
             </small>
-        </div>
+        </a>
     </div>
-
 </div>
+
+<!--<div th:fragment="bookForm(formBook, allAuthors, #fields)">-->
+<!--    <form class="row g-3" th:action="@{/book/save}" method="post" th:object="${formBook}">-->
+<!--        <input type="hidden" th:field="*{bookId}">-->
+<!--        <div class="row g-3 align-items-center">-->
+<!--            <div class="col-5">-->
+<!--                <label for="title" class="col-form-label">Title</label>-->
+<!--            </div>-->
+<!--            <div class="col-7">-->
+<!--                <input type="text" id="title" class="form-control" aria-describedby="titleHelpInline" th:field="*{title}">-->
+<!--            </div>-->
+<!--            <div class="col-12">-->
+<!--                    <span id="titleHelpInline" class="form-text" th:if="${#fields.hasErrors('title')}" th:errors="*{title}">-->
+<!--                    </span>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--        <div class="row g-3 align-items-center">-->
+<!--            <div class="col-5">-->
+<!--                <label for="description" class="col-form-label">Description</label>-->
+<!--            </div>-->
+<!--            <div class="col-7">-->
+<!--                <textarea id="description" class="form-control" aria-describedby="descriptionHelpInline" th:field="*{description}"></textarea>-->
+<!--            </div>-->
+<!--            <div class="col-12">-->
+<!--                    <span id="descriptionHelpInline" class="form-text" th:if="${#fields.hasErrors('description')}" th:errors="*{description}">-->
+<!--                    </span>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--        <div class="row g-3 align-items-center">-->
+<!--            <div class="col-5">-->
+<!--                <label for="imageUrl" class="col-form-label">Image URL</label>-->
+<!--            </div>-->
+<!--            <div class="col-7">-->
+<!--                <input type="url" id="imageUrl" class="form-control" aria-describedby="imageUrlHelpInline" th:field="*{imageUrl}">-->
+<!--            </div>-->
+<!--            <div class="col-12">-->
+<!--                    <span id="imageUrlHelpInline" class="form-text" th:if="${#fields.hasErrors('imageUrl')}" th:errors="*{imageUrl}">-->
+<!--                    </span>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--        <div class="row g-3 align-items-center">-->
+<!--            <div class="col-5">-->
+<!--                <label for="authors" class="col-form-label">Authors</label>-->
+<!--            </div>-->
+<!--            <div class="col-7">-->
+<!--                <select id="authors" class="form-select" aria-describedby="authorHelpInline" th:field="*{authors}" multiple>-->
+<!--                    <option th:each="authorOption : ${allAuthors}"-->
+<!--                            th:text="${authorOption.name}"-->
+<!--                            th:value="${authorOption.authorId}">-->
+<!--                    </option>-->
+<!--                </select>-->
+<!--            </div>-->
+<!--            <div class="col-12">-->
+<!--                    <span id="authorHelpInline" class="form-text" th:if="${#fields.hasErrors('authors')}" th:errors="*{authors}">-->
+<!--                    </span>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--        <button type="submit" class="btn btn-primary mb-3">Save book</button>-->
+<!--    </form>-->
+<!--</div>-->
+
+<!--&lt;!&ndash; Modal &ndash;&gt;-->
+<!--<div th:fragment="bookFormModal(formBook, allAuthors, #fields)" class="modal fade" id="editForm" tabindex="-1" aria-labelledby="editFormModalLabel" aria-hidden="true">-->
+<!--    <div class="modal-dialog">-->
+<!--        <div class="modal-content">-->
+<!--            <h1 class="modal-title text-center" id="editFormModalLabel">Book edit form</h1>-->
+<!--            <div class="modal-body">-->
+<!--                <div class="container-fluid">-->
+<!--                    <div th:replace="~{:: bookForm(${formBook}, ${allAuthors}, ${#fields})}"></div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
+
+<!--    <script th:unless="${formModalHidden}">-->
+<!--        new bootstrap.Modal(document.getElementById('editForm'), {}).toggle()-->
+<!--    </script>-->
+<!--</div>-->
 
 </body>
 </html>

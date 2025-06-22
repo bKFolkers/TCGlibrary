@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<html lang="en" xmlns:th="https://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org">
 <head th:fragment="baseheader(title)">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -30,6 +30,12 @@
             <a class="nav-link" th:href="@{/deck/overview}">
                 <img src="https://cdn3.iconfinder.com/data/icons/card-games-colored/48/Games_CardGames_Artboard_22-512.png"
                      alt="Logo" width="40" height="40" class="d-inline-block">Decks</a>
+        </li>
+        <li class="nav-item" sec:authorize="isAnonymous()">
+            <a class="nav-link" th:href="@{/login}">Login</a>
+        </li>
+        <li class="nav-item" sec:authorize="isAuthenticated()">
+            <a class="nav-link" th:href="@{/logout}">Logout <span sec:authentication="name"></span></a>
         </li>
     </ul>
 </div>

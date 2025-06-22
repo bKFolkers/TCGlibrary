@@ -1,6 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
-
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org">
 
 <body>
 
@@ -8,41 +7,45 @@
     <a th:href="@{/expansion/new}">Add Expansion</a>
 </div>
 
-<!-- Fragment om alle expansions te tonen -->
 <div th:fragment="expansionCards(expansions)" class="row row-cols-1 row-cols-md-3 g-5">
     <div th:each="expansion : ${expansions}"
          th:insert="~{:: expansionCard(expansion)}">
     </div>
 </div>
 
-<!-- Fragment voor 1 expansion-kaart -->
 <div th:fragment="expansionCard(expansion)" class="col">
     <div class="card h-100 d-flex flex-column m-2 border-black shadow">
+
         <div class="card-header text-center">
             <a th:href="@{/expansion/detail/{expansionName}(expansionName = ${expansion.name})}"
                class="text-white text-decoration-none">
                 <h1 class="card-title mb-0 fw-bold"  th:text="${expansion.name}"></h1>
             </a>
         </div>
+
         <a th:href="@{/expansion/detail/{expansionName}(expansionName = ${expansion.name})}">
             <img height="300px" th:src="${expansion.imageUrl}"
                  class="card-img-top object-fit-md-contain obj"
                  th:alt="|Cover for ${expansion.name}|"/>
         </a>
+
         <div class="card-body flex-grow-1 fw-bold">
             <p class="card-text text-muted text-center" th:text="${expansion.description}"></p>
         </div>
+
 <!--        <ul class="list-group list-group-flush">-->
 <!--            <li class="list-group-item" th:each="expansion : ${expansion.numberOfAddedCards}">-->
 <!--                <a th:href="@{expansion/detail/}" th:text="|Cards collected|"></a>-->
 <!--            </li>-->
 <!--        </ul>-->
+
         <a th:href="@{/expansion/detail/{expansionName}(expansionName = ${expansion.name})}"
            class="card-footer text-center text-decoration-none d-block">
             <small class="footer-text fw-semibold"
                    th:text="|${expansion.numberOfAddedCards} out of ${expansion.numberOfCards} cards collected|">
             </small>
         </a>
+
     </div>
 </div>
 

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<html lang="en" xmlns:th="https://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org">
 <head th:replace="~{fragments/general :: baseheader(~{:: title})}">
     <title>Expansion overview</title>
 </head>
@@ -7,10 +7,10 @@
 
 <div th:replace="~{fragments/general :: navbar}"></div>
 
-<div class="container">
+<div class="container" >
     <h1 class="pageTitle">Expansions</h1>
 
-    <div class="mb-3 d-flex justify-content-center">
+    <div class="mb-3 d-flex justify-content-center" sec:authorize="isAuthenticated()">
         <a th:href="@{/expansion/new}" class="btn btn-dark">Add Expansion</a>
     </div>
 

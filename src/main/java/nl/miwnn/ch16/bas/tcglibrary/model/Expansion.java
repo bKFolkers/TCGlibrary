@@ -19,6 +19,8 @@ public class Expansion {
     @Column(unique = true)
     private String name;
 
+    private String description;
+
     private LocalDate releaseDate;
     private Integer numberOfCards;
     private String imageUrl;
@@ -49,6 +51,9 @@ public class Expansion {
     }
 
     public Integer getNumberOfAddedCards() {
+        if (numberOfAddedCards == null) {
+            return numberOfAddedCards = 0;
+        }
         return numberOfAddedCards;
     }
 
@@ -70,6 +75,14 @@ public class Expansion {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public LocalDate getReleaseDate() {

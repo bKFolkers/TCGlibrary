@@ -61,16 +61,16 @@ public class InitializeController {
         try (CSVReader reader = new CSVReader(new InputStreamReader(
                 new ClassPathResource("/tcg_data/expansions/baseSetExpansion.csv").getInputStream()))) {
 
-            // Skip header
             reader.skip(1);
 
             for (String[] expansionLine : reader) {
                 Expansion expansion = new Expansion();
 
                 expansion.setName(expansionLine[0]);
-                expansion.setReleaseDate(LocalDate.parse(expansionLine[1]));
-                expansion.setNumberOfCards(Integer.valueOf(expansionLine[2]));
-                expansion.setImageUrl(expansionLine[3]);
+                expansion.setDescription(expansionLine[1]);
+                expansion.setReleaseDate(LocalDate.parse(expansionLine[2]));
+                expansion.setNumberOfCards(Integer.valueOf(expansionLine[3]));
+                expansion.setImageUrl(expansionLine[4]);
 
                 expansionRepository.save(expansion);
                 expansionCache.put(expansion.getName(), expansion);
@@ -82,7 +82,6 @@ public class InitializeController {
         try (CSVReader reader = new CSVReader(new InputStreamReader(
                 new ClassPathResource("/tcg_data/cards/baseSetCards.csv").getInputStream()))) {
 
-            // Skip header
             reader.skip(1);
 
             for (String[] cardLine : reader) {
@@ -114,7 +113,6 @@ public class InitializeController {
         try (CSVReader reader = new CSVReader(new InputStreamReader(
                 new ClassPathResource("/tcg_data/decks/decks.csv").getInputStream()))) {
 
-            // Skip header
             reader.skip(1);
 
             for (String[] decksLine : reader) {

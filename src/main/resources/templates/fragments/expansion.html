@@ -4,7 +4,7 @@
 <body>
 
 <!-- Fragment om alle expansions te tonen -->
-<div th:fragment="expansionCards(expansions)" class="row row-cols-1 row-cols-md-6 g-4">
+<div th:fragment="expansionCards(expansions)" class="row row-cols-1 row-cols-md-3 g-2">
     <div th:each="expansion : ${expansions}"
          th:insert="~{:: expansionCard(expansion)}">
     </div>
@@ -13,12 +13,31 @@
 <!-- Fragment voor 1 expansion-kaart -->
 <div th:fragment="expansionCard(expansion)" class="col">
     <div class="card h-100">
+        <div class="card-header">
+            <a th:href="@{/expansion/detail/{expansionName}(expansionName = ${expansion.name})}">
+                <h1 class="card-title text-center" th:text="${expansion.name}"></h1>
+            </a>
+        </div>
         <a th:href="@{/expansion/detail/{expansionName}(expansionName = ${expansion.name})}">
             <img height="300px" th:src="${expansion.imageUrl}"
-                 class="card-img-top object-fit-cover"
+                 class="card-img-top object-fit-md-contain obj"
                  th:alt="|Cover for ${expansion.name}|"/>
         </a>
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item" th:each="expansion : ${expansion.numberOfAddedCards}">
+                <a th:href="@{expansion/detail/}" th:text="|Cards collected|"></a>
+            </li>
+        </ul>
+        <div class="card-body" style="">
+            <p class="card-text" th:text="${expansion.description}"></p>
+        </div>
+        <div class="card-footer">
+            <small class="text-body-secondary"
+                   th:text="|${expansion.numberOfAddedCards} out of ${expansion.numberOfCards} cards collected|">
+            </small>
+        </div>
     </div>
+
 </div>
 
 </body>

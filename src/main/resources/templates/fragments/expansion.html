@@ -6,17 +6,16 @@
 <!-- Fragment om alle expansions te tonen -->
 <div th:fragment="expansionCards(expansions)" class="row row-cols-1 row-cols-md-6 g-4">
     <div th:each="expansion : ${expansions}"
-         th:replace="fragments/expansion :: expansionCard(expansion=${expansion})">
+         th:insert="~{:: expansionCard(expansion)}">
     </div>
 </div>
 
 <!-- Fragment voor 1 expansion-kaart -->
 <div th:fragment="expansionCard(expansion)" class="col">
     <div class="card h-100">
-        <a th:href="@{/expansion/detail/{expansionName}(expansionName=${expansion.name})}">
-            <img th:src="${expansion.imageUrl}"
+        <a th:href="@{/expansion/detail/{expansionName}(expansionName = ${expansion.name})}">
+            <img height="300px" th:src="${expansion.imageUrl}"
                  class="card-img-top object-fit-cover"
-                 height="300px"
                  th:alt="|Cover for ${expansion.name}|"/>
         </a>
     </div>

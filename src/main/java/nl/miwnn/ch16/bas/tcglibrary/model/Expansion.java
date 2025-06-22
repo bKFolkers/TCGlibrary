@@ -16,14 +16,14 @@ public class Expansion {
     @Id @GeneratedValue
     private Long expansionId;
 
+    @Column(unique = true)
     private String name;
+
     private LocalDate releaseDate;
     private Integer numberOfCards;
     private String imageUrl;
 
     private Integer numberOfAddedCards;
-
-    private Double expansionWorth;
 
     @OneToMany(mappedBy = "expansion")
     private List<Card> cards = new ArrayList<>();
@@ -107,10 +107,6 @@ public class Expansion {
                 .sum();
 
         return Math.round(sum * 100.0) / 100.0;
-    }
-
-    public void setExpansionWorth(Double expansionWorth) {
-        this.expansionWorth = expansionWorth;
     }
 
     public List<Card> getCards() {
